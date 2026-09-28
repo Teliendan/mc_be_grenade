@@ -1,0 +1,14 @@
+{
+    "format_version": "1.20.10",
+    "minecraft:recipe_shaped": {
+        "description": { "identifier": "gm:grenade_recipe" },
+        "tags": ["crafting_table"],
+        "pattern": [" C ", "CGC", " C "],
+        "key": {
+            "G": { "item": "minecraft:gunpowder" },
+            "C": { "item": "minecraft:copper_nugget" }
+        },
+        "unlock": [ { "item": "minecraft:gunpowder" } ],
+        "result": { "item": "gm:grenade", "count": 1 }
+    }
+}

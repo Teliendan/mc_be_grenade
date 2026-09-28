@@ -1,0 +1,39 @@
+{
+    "format_version": 2,
+    "header": {
+        "name": "Grenade Mod RP",
+        "description": "Grenade resource pack: item texture, thrown-projectile entity, and text.",
+        "uuid": "f4c9023e-8ef0-4b6e-982f-f587a5bc9587",
+        "version": [
+            1,
+            0,
+            0
+        ],
+        "min_engine_version": [
+            1,
+            21,
+            120
+        ]
+    },
+    "modules": [
+        {
+            "type": "resources",
+            "uuid": "bab95540-fad0-40a2-9756-bc74d5b26488",
+            "version": [
+                1,
+                0,
+                0
+            ]
+        }
+    ],
+    "dependencies": [
+        {
+            "uuid": "b80702b8-9267-47f9-813f-1a759bd64e09",
+            "version": [
+                1,
+                0,
+                0
+            ]
+        }
+    ]
+}

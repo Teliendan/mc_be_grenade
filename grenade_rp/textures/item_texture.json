@@ -1,0 +1,9 @@
+{
+    "resource_pack_name": "grenade_rp",
+    "texture_name": "atlas.items",
+    "texture_data": {
+        "gm:grenade": {
+            "textures": "textures/grenade"
+        }
+    }
+}

@@ -1,8 +1,8 @@
 {
     "format_version": 2,
     "header": {
-        "name": "Grenade Mod BP",
-        "description": "Grenade behavior pack: throwable item, crafting recipe, and exploding projectile entity.",
+        "name": "pack.name",
+        "description": "pack.description",
         "uuid": "b80702b8-9267-47f9-813f-1a759bd64e09",
         "version": [
             1,

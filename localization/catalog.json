@@ -1,0 +1,323 @@
+{
+  "version": 1,
+  "locales": [
+    "en_US",
+    "cs_CZ",
+    "es_ES",
+    "es_MX",
+    "pt_PT",
+    "pt_BR",
+    "de_DE",
+    "fr_FR",
+    "pl_PL"
+  ],
+  "policy": "AI-authored contextual translations; independent language review and in-game layout testing pending. en_GB aliases en_US and fr_CA aliases fr_FR. Preserve lore names and mod brands.",
+  "packs": {
+    "grenade_bp": {
+      "kind": "behavior",
+      "entries": {
+        "pack.name": {
+          "source": "Grenade — Behavior Pack",
+          "context": {
+            "meaning": "Pack title or description for grenade_bp. BP means behavior pack; RP means resource pack. Keep mod brands unchanged.",
+            "location": "grenade_bp: pack selection screen",
+            "trigger": "Shown when the player views or uses this content.",
+            "tone": "Clear Minecraft UI",
+            "grammar": "Pack title or a complete description; localize pack type and descriptive words.",
+            "constraints": "Preserve namespace IDs, commands, coordinates, color codes, placeholder order and lore proper names. Action-bar labels must stay short; no assumed player gender."
+          },
+          "placeholders": [],
+          "translations": {
+            "cs_CZ": {
+              "text": "Grenade — Balíček chování",
+              "based_on": "1c64c9f3d41d3d0030cb4905e0a8836b664cf3b9dc2f53f5627bcdd3a8c0099e",
+              "status": "ai-draft"
+            },
+            "es_ES": {
+              "text": "Grenade — Paquete de comportamiento",
+              "based_on": "1c64c9f3d41d3d0030cb4905e0a8836b664cf3b9dc2f53f5627bcdd3a8c0099e",
+              "status": "ai-draft"
+            },
+            "es_MX": {
+              "text": "Grenade — Paquete de comportamiento",
+              "based_on": "1c64c9f3d41d3d0030cb4905e0a8836b664cf3b9dc2f53f5627bcdd3a8c0099e",
+              "status": "ai-draft"
+            },
+            "pt_PT": {
+              "text": "Grenade — Pacote de comportamento",
+              "based_on": "1c64c9f3d41d3d0030cb4905e0a8836b664cf3b9dc2f53f5627bcdd3a8c0099e",
+              "status": "ai-draft"
+            },
+            "pt_BR": {
+              "text": "Grenade — Pacote de comportamento",
+              "based_on": "1c64c9f3d41d3d0030cb4905e0a8836b664cf3b9dc2f53f5627bcdd3a8c0099e",
+              "status": "ai-draft"
+            },
+            "de_DE": {
+              "text": "Grenade — Verhaltenspaket",
+              "based_on": "1c64c9f3d41d3d0030cb4905e0a8836b664cf3b9dc2f53f5627bcdd3a8c0099e",
+              "status": "ai-draft"
+            },
+            "fr_FR": {
+              "text": "Grenade — Pack de comportement",
+              "based_on": "1c64c9f3d41d3d0030cb4905e0a8836b664cf3b9dc2f53f5627bcdd3a8c0099e",
+              "status": "ai-draft"
+            },
+            "pl_PL": {
+              "text": "Grenade — Pakiet zachowań",
+              "based_on": "1c64c9f3d41d3d0030cb4905e0a8836b664cf3b9dc2f53f5627bcdd3a8c0099e",
+              "status": "ai-draft"
+            }
+          }
+        },
+        "pack.description": {
+          "source": "Grenade behavior pack: throwable grenades, crafting and explosions.",
+          "context": {
+            "meaning": "Pack title or description for grenade_bp. BP means behavior pack; RP means resource pack. Keep mod brands unchanged.",
+            "location": "grenade_bp: pack selection screen",
+            "trigger": "Shown when the player views or uses this content.",
+            "tone": "Clear Minecraft UI",
+            "grammar": "Pack title or a complete description; localize pack type and descriptive words.",
+            "constraints": "Preserve namespace IDs, commands, coordinates, color codes, placeholder order and lore proper names. Action-bar labels must stay short; no assumed player gender."
+          },
+          "placeholders": [],
+          "translations": {
+            "cs_CZ": {
+              "text": "Balíček chování Grenade: vrhací granáty, výroba a výbuchy.",
+              "based_on": "b8d37a6c22484ce3aa7f4f878c1aff79cc69e7187f3721cd53e3b722f8b3289c",
+              "status": "ai-draft"
+            },
+            "es_ES": {
+              "text": "Paquete de comportamiento de Grenade: granadas arrojadizas, fabricación y explosiones.",
+              "based_on": "b8d37a6c22484ce3aa7f4f878c1aff79cc69e7187f3721cd53e3b722f8b3289c",
+              "status": "ai-draft"
+            },
+            "es_MX": {
+              "text": "Paquete de comportamiento de Grenade: granadas arrojadizas, fabricación y explosiones.",
+              "based_on": "b8d37a6c22484ce3aa7f4f878c1aff79cc69e7187f3721cd53e3b722f8b3289c",
+              "status": "ai-draft"
+            },
+            "pt_PT": {
+              "text": "Pacote de comportamento de Grenade: granadas de arremesso, fabrico e explosões.",
+              "based_on": "b8d37a6c22484ce3aa7f4f878c1aff79cc69e7187f3721cd53e3b722f8b3289c",
+              "status": "ai-draft"
+            },
+            "pt_BR": {
+              "text": "Pacote de comportamento de Grenade: granadas de arremesso, fabricação e explosões.",
+              "based_on": "b8d37a6c22484ce3aa7f4f878c1aff79cc69e7187f3721cd53e3b722f8b3289c",
+              "status": "ai-draft"
+            },
+            "de_DE": {
+              "text": "Verhaltenspaket für Grenade: Wurfgranaten, Herstellung und Explosionen.",
+              "based_on": "b8d37a6c22484ce3aa7f4f878c1aff79cc69e7187f3721cd53e3b722f8b3289c",
+              "status": "ai-draft"
+            },
+            "fr_FR": {
+              "text": "Pack de comportement de Grenade : grenades, fabrication et explosions.",
+              "based_on": "b8d37a6c22484ce3aa7f4f878c1aff79cc69e7187f3721cd53e3b722f8b3289c",
+              "status": "ai-draft"
+            },
+            "pl_PL": {
+              "text": "Pakiet zachowań Grenade: rzucane granaty, wytwarzanie i eksplozje.",
+              "based_on": "b8d37a6c22484ce3aa7f4f878c1aff79cc69e7187f3721cd53e3b722f8b3289c",
+              "status": "ai-draft"
+            }
+          }
+        }
+      }
+    },
+    "grenade_rp": {
+      "kind": "resource",
+      "entries": {
+        "item.gm:grenade": {
+          "source": "Grenade",
+          "context": {
+            "meaning": "Grenade.",
+            "location": "grenade_rp: inventory/block tooltip, entity name or spawn egg",
+            "trigger": "Viewed in inventory, Creative inventory, block targeting or entity UI, as appropriate to this key.",
+            "tone": "Clear Minecraft UI",
+            "grammar": "Standalone noun phrase, no sentence punctuation.",
+            "constraints": "Preserve namespace IDs, commands, coordinates, color codes, placeholder order and lore proper names. Action-bar labels must stay short; no assumed player gender."
+          },
+          "placeholders": [],
+          "translations": {
+            "cs_CZ": {
+              "text": "Granát",
+              "based_on": "ba714262f242517465c11cdc82cf2c91104181cf403043b68f2a55b14c97ebe8",
+              "status": "ai-draft"
+            },
+            "es_ES": {
+              "text": "Granada",
+              "based_on": "ba714262f242517465c11cdc82cf2c91104181cf403043b68f2a55b14c97ebe8",
+              "status": "ai-draft"
+            },
+            "es_MX": {
+              "text": "Granada",
+              "based_on": "ba714262f242517465c11cdc82cf2c91104181cf403043b68f2a55b14c97ebe8",
+              "status": "ai-draft"
+            },
+            "pt_PT": {
+              "text": "Granada",
+              "based_on": "ba714262f242517465c11cdc82cf2c91104181cf403043b68f2a55b14c97ebe8",
+              "status": "ai-draft"
+            },
+            "pt_BR": {
+              "text": "Granada",
+              "based_on": "ba714262f242517465c11cdc82cf2c91104181cf403043b68f2a55b14c97ebe8",
+              "status": "ai-draft"
+            },
+            "de_DE": {
+              "text": "Granate",
+              "based_on": "ba714262f242517465c11cdc82cf2c91104181cf403043b68f2a55b14c97ebe8",
+              "status": "ai-draft"
+            },
+            "fr_FR": {
+              "text": "Grenade",
+              "based_on": "ba714262f242517465c11cdc82cf2c91104181cf403043b68f2a55b14c97ebe8",
+              "status": "ai-draft"
+            },
+            "pl_PL": {
+              "text": "Granat",
+              "based_on": "ba714262f242517465c11cdc82cf2c91104181cf403043b68f2a55b14c97ebe8",
+              "status": "ai-draft"
+            }
+          }
+        },
+        "pack.name": {
+          "source": "Grenade — Resource Pack",
+          "context": {
+            "meaning": "Pack title or description for grenade_rp. BP means behavior pack; RP means resource pack. Keep mod brands unchanged.",
+            "location": "grenade_rp: pack selection screen",
+            "trigger": "Shown when the player views or uses this content.",
+            "tone": "Clear Minecraft UI",
+            "grammar": "Pack title or a complete description; localize pack type and descriptive words.",
+            "constraints": "Preserve namespace IDs, commands, coordinates, color codes, placeholder order and lore proper names. Action-bar labels must stay short; no assumed player gender."
+          },
+          "placeholders": [],
+          "translations": {
+            "cs_CZ": {
+              "text": "Grenade — Balíček zdrojů",
+              "based_on": "371d3a1fb30fa3a5b261a412e094c2d0bec37ef1f69e5c80c325580ac49e4856",
+              "status": "ai-draft"
+            },
+            "es_ES": {
+              "text": "Grenade — Paquete de recursos",
+              "based_on": "371d3a1fb30fa3a5b261a412e094c2d0bec37ef1f69e5c80c325580ac49e4856",
+              "status": "ai-draft"
+            },
+            "es_MX": {
+              "text": "Grenade — Paquete de recursos",
+              "based_on": "371d3a1fb30fa3a5b261a412e094c2d0bec37ef1f69e5c80c325580ac49e4856",
+              "status": "ai-draft"
+            },
+            "pt_PT": {
+              "text": "Grenade — Pacote de recursos",
+              "based_on": "371d3a1fb30fa3a5b261a412e094c2d0bec37ef1f69e5c80c325580ac49e4856",
+              "status": "ai-draft"
+            },
+            "pt_BR": {
+              "text": "Grenade — Pacote de recursos",
+              "based_on": "371d3a1fb30fa3a5b261a412e094c2d0bec37ef1f69e5c80c325580ac49e4856",
+              "status": "ai-draft"
+            },
+            "de_DE": {
+              "text": "Grenade — Ressourcenpaket",
+              "based_on": "371d3a1fb30fa3a5b261a412e094c2d0bec37ef1f69e5c80c325580ac49e4856",
+              "status": "ai-draft"
+            },
+            "fr_FR": {
+              "text": "Grenade — Pack de ressources",
+              "based_on": "371d3a1fb30fa3a5b261a412e094c2d0bec37ef1f69e5c80c325580ac49e4856",
+              "status": "ai-draft"
+            },
+            "pl_PL": {
+              "text": "Grenade — Pakiet zasobów",
+              "based_on": "371d3a1fb30fa3a5b261a412e094c2d0bec37ef1f69e5c80c325580ac49e4856",
+              "status": "ai-draft"
+            }
+          }
+        },
+        "pack.description": {
+          "source": "Grenade resource pack: textures, models and text.",
+          "context": {
+            "meaning": "Pack title or description for grenade_rp. BP means behavior pack; RP means resource pack. Keep mod brands unchanged.",
+            "location": "grenade_rp: pack selection screen",
+            "trigger": "Shown when the player views or uses this content.",
+            "tone": "Clear Minecraft UI",
+            "grammar": "Pack title or a complete description; localize pack type and descriptive words.",
+            "constraints": "Preserve namespace IDs, commands, coordinates, color codes, placeholder order and lore proper names. Action-bar labels must stay short; no assumed player gender."
+          },
+          "placeholders": [],
+          "translations": {
+            "cs_CZ": {
+              "text": "Balíček zdrojů Grenade: textury, modely a texty.",
+              "based_on": "f72f3d2bcea7ee1ce56f0a8b85dffd6dd222c6f1fa26b00061cedc34692adc1b",
+              "status": "ai-draft"
+            },
+            "es_ES": {
+              "text": "Paquete de recursos de Grenade: texturas, modelos y textos.",
+              "based_on": "f72f3d2bcea7ee1ce56f0a8b85dffd6dd222c6f1fa26b00061cedc34692adc1b",
+              "status": "ai-draft"
+            },
+            "es_MX": {
+              "text": "Paquete de recursos de Grenade: texturas, modelos y textos.",
+              "based_on": "f72f3d2bcea7ee1ce56f0a8b85dffd6dd222c6f1fa26b00061cedc34692adc1b",
+              "status": "ai-draft"
+            },
+            "pt_PT": {
+              "text": "Pacote de recursos de Grenade: texturas, modelos e textos.",
+              "based_on": "f72f3d2bcea7ee1ce56f0a8b85dffd6dd222c6f1fa26b00061cedc34692adc1b",
+              "status": "ai-draft"
+            },
+            "pt_BR": {
+              "text": "Pacote de recursos de Grenade: texturas, modelos e textos.",
+              "based_on": "f72f3d2bcea7ee1ce56f0a8b85dffd6dd222c6f1fa26b00061cedc34692adc1b",
+              "status": "ai-draft"
+            },
+            "de_DE": {
+              "text": "Ressourcenpaket für Grenade: Texturen, Modelle und Texte.",
+              "based_on": "f72f3d2bcea7ee1ce56f0a8b85dffd6dd222c6f1fa26b00061cedc34692adc1b",
+              "status": "ai-draft"
+            },
+            "fr_FR": {
+              "text": "Pack de ressources de Grenade : textures, modèles et textes.",
+              "based_on": "f72f3d2bcea7ee1ce56f0a8b85dffd6dd222c6f1fa26b00061cedc34692adc1b",
+              "status": "ai-draft"
+            },
+            "pl_PL": {
+              "text": "Pakiet zasobów Grenade: tekstury, modele i teksty.",
+              "based_on": "f72f3d2bcea7ee1ce56f0a8b85dffd6dd222c6f1fa26b00061cedc34692adc1b",
+              "status": "ai-draft"
+            }
+          }
+        }
+      }
+    }
+  },
+  "glossary": {
+    "grenade": {
+      "meaning": "Craftable throwable explosive projectile; neither pomegranate nor launcher.",
+      "localized": {
+        "cs_CZ": "Granát",
+        "es_ES": "Granada",
+        "es_MX": "Granada",
+        "pt_PT": "Granada",
+        "pt_BR": "Granada",
+        "de_DE": "Granate",
+        "fr_FR": "Grenade",
+        "pl_PL": "Granat"
+      }
+    },
+    "vanilla_reference": {
+      "commit": "46ba6ea985fb5a92d79a9419198f10dda14c199d",
+      "url": "https://github.com/Mojang/bedrock-samples/tree/46ba6ea985fb5a92d79a9419198f10dda14c199d/resource_pack/texts",
+      "status": "Documented sample terminology, not checked in game. Installed extracted 1.26.52 .lang files are empty."
+    }
+  },
+  "style": {
+    "audience": "Minecraft players; concise UI and gentle woodland narrative where applicable.",
+    "address": "Czech respectful plural address; Spanish tú; Portuguese Portugal tu, Brazil você; German du; French tu; Polish ty. Avoid assuming player gender.",
+    "review": "AI draft, not independently language-reviewed or tested in game.",
+    "reference": "Locale list verified in installed 1.26.52 reference. Vanilla terminology checked against Mojang bedrock-samples commit 46ba6ea985fb5a92d79a9419198f10dda14c199d; sample terms documented, not checked in game."
+  }
+}

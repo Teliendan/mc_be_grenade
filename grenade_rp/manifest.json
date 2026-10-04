@@ -1,8 +1,8 @@
 {
     "format_version": 2,
     "header": {
-        "name": "Grenade Mod RP",
-        "description": "Grenade resource pack: item texture, thrown-projectile entity, and text.",
+        "name": "pack.name",
+        "description": "pack.description",
         "uuid": "f4c9023e-8ef0-4b6e-982f-f587a5bc9587",
         "version": [
             1,

@@ -1,0 +1,12 @@
+{
+  "schema_version": 1,
+  "exceptions": [
+    {
+      "rule": "entity.display_name_missing",
+      "path": "rp/texts/en_US.lang",
+      "subject": "gm:grenade_projectile",
+      "reason": "Non-spawn-egg flight/explosion entity; the throwable grenade item is localized separately. Entity display-name omission is intentional, reviewed 2026-10-13.",
+      "evidence": "docs/VERIFIER_WARNINGS.md"
+    }
+  ]
+}

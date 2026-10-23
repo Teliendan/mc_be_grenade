@@ -10,17 +10,10 @@ export function harness() {
   const queue = [];
   const handlers = {};
   const calls = [];
-  const sources = new Map();
-  const sourceLookups = [];
-  let lookupFails = false;
   const signal = (name) => ({ subscribe: (callback) => { handlers[name] = callback; } });
   const schedule = (callback, delay = 1) => queue.push({ at: tick + delay, callback });
   const world = {
-    getEntity(id) {
-      sourceLookups.push(id);
-      if (lookupFails) throw new Error("injected unavailable source");
-      return sources.get(id);
-    }, afterEvents: {
+afterEvents: {
     worldLoad: signal("load"), projectileHitBlock: signal("block"), projectileHitEntity: signal("entity"),
   } };
   runInNewContext(source, { world, system: { run: schedule, runTimeout: schedule } });
@@ -44,8 +37,7 @@ export function harness() {
     remove() { this.isValid = false; record("remove", {}); },
   });
   return {
-    calls, dimension, projectile, sources, sourceLookups,
-    failSourceLookup() { lookupFails = true; },
+    calls, dimension, projectile,
     hit(kind, entity, location = { x: 10, y: 64, z: 20 }, source) {
       handlers[kind]({ projectile: entity, dimension, location, source });
     },

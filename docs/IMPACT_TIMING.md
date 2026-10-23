@@ -1,5 +1,12 @@
 # Grenade impact timing
 
+2026-10-23 follow-up: original four scenarios now live in
+`tests/impact_timing.mjs`, using a shared fixture with the independent
+13-case `ownership` suite. `tests/run.mjs` is the thin registered full runner;
+normal `mods verify grenade` and deploy run it automatically. The source-ID
+handoff to native explosion options preserves existing impact timing/options.
+Native credit/XP/PvP observations remain pending in the portable game checklist.
+
 2026-10-04. Target game: Bedrock 1.26.52, Script API 2.8.0.
 Commit: `Delay grenade explosion until impact is visible`.
 

@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "suites": {
+    "impact-timing": ["impact_timing.mjs"],
+    "ownership": ["ownership.mjs"],
+    "suite-layout": ["suite_layout.mjs"]
+  },
+  "support_files": {
+    "support/harness.mjs": "Production-script loader, event/tick fixture and recorded explosions shared by independent regression suites."
+  }
+}

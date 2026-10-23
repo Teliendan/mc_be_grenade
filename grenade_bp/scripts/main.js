@@ -30,6 +30,10 @@ function onHit(event) {
   // Take the position from the EVENT, not the entity: it is the true impact point.
   const dimension = event.dimension;
   const location = { ...event.location };
+  // Keep the impact's actual shooter identity across the visual settle delay.
+  // Dispensers have no actor source; an expired shooter must not cancel a blast.
+  let sourceId;
+  try { sourceId = event.source?.id; } catch { /* source already unavailable */ }
 
   system.run(() => {
     try {
@@ -54,12 +58,15 @@ function onHit(event) {
         /* chunk unloaded */
       }
 
+      const options = { breaksBlocks: false, causesFire: false, allowUnderwater: true };
+      if (sourceId !== undefined) {
+        try {
+          const source = world.getEntity(sourceId);
+          if (source?.isValid) options.source = source;
+        } catch { /* shooter unavailable: detonate without an actor source */ }
+      }
       try {
-        dimension.createExplosion(location, EXPLOSION_RADIUS, {
-          breaksBlocks: false,
-          causesFire: false,
-          allowUnderwater: true,
-        });
+        dimension.createExplosion(location, EXPLOSION_RADIUS, options);
       } catch {
         /* chunk unloaded */
       }

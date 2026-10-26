@@ -37,6 +37,14 @@
       "unit": "seconds",
       "scale": 0.05,
       "featureId": "gm:grenade"
+    },
+    {
+      "id": "gm:grenade/damage-range",
+      "file": "grenade_bp/scripts/main.js",
+      "constant": "DAMAGE_RANGE",
+      "label": "Damage range",
+      "unit": "blocks",
+      "featureId": "gm:grenade"
     }
   ]
 }

@@ -3,7 +3,7 @@ import { readFileSync } from "node:fs";
 import { runInNewContext } from "node:vm";
 
 const source = readFileSync(new URL("../../grenade_bp/scripts/main.js", import.meta.url), "utf8")
-  .replace(/^import \{ world, system \} from "@minecraft\/server";\r?\n/, "")
+  .replace(/^import \{ world, system, EntityDamageCause \} from "@minecraft\/server";\r?\n/, "")
   .replace(/^import \{ blastMode, startBlastProbe \} from "\.\/blast_probe\.js";\r?\n/, "");
 
 const NORMALS = {
@@ -20,8 +20,8 @@ function blockHit(location, spec) {
     getBlockHit: () => ({ face, block: { location: cell } }) };
 }
 
-// `mode` is the blast method from blast_probe.js: native, grenade or player.
-export function harness({ mode = "native" } = {}) {
+// `mode` is the blast method from blast_probe.js: scripted, native or grenade.
+export function harness({ mode = "scripted" } = {}) {
   let tick = 0;
   const queue = [];
   const handlers = {};
@@ -33,7 +33,7 @@ afterEvents: {
     worldLoad: signal("load"), projectileHitBlock: signal("block"), projectileHitEntity: signal("entity"),
   } };
   runInNewContext(source, { world, system: { run: schedule, runTimeout: schedule },
-    blastMode: () => mode, startBlastProbe() {} });
+    blastMode: () => mode, startBlastProbe() {}, EntityDamageCause: { entityExplosion: "entityExplosion" } });
   handlers.load();
   const record = (kind, location) => calls.push({ kind, tick, location: { ...location } });
   const dimension = {
@@ -47,7 +47,24 @@ afterEvents: {
       calls[calls.length - 1].options = options;
       calls[calls.length - 1].sourceWasValid = options.source?.isValid;
     },
+    // Tests fill `nearby` (what the engine's query returns) and may set `blocked(center, direction, maxDistance)`.
+    nearby: [],
+    blocked: () => false,
+    getEntities(query) { this.query = query; return this.nearby; },
+    getBlockFromRay(center, direction, options) {
+      return this.blocked(center, direction, options.maxDistance) ? { block: {} } : undefined;
+    },
   };
+  // A mob standing at `location`, `height` blocks tall; applyDamage records its arguments.
+  const mob = (id, location, height = 1.8) => ({
+    id, typeId: "minecraft:zombie", location, isValid: true,
+    getHeadLocation: () => ({ ...location, y: location.y + height * 0.9 }),
+    applyDamage(amount, options) {
+      record("damage", location);
+      Object.assign(calls[calls.length - 1], { target: id, amount, options });
+      return true;
+    },
+  });
   const projectile = (id = "grenade-1", typeId = "gm:grenade_projectile") => ({
     id, typeId, isValid: true,
     clearVelocity() { record("stop", {}); },
@@ -56,7 +73,7 @@ afterEvents: {
     triggerEvent(event) { record("detonate", {}); calls[calls.length - 1].event = event; },
   });
   return {
-    calls, dimension, projectile,
+    calls, dimension, projectile, mob,
     // `face` is a face name (head-on hit, reported on the face) or { face, block, hitVector }.
     hit(kind, entity, location = { x: 10, y: 64, z: 20 }, source, face) {
       handlers[kind]({ projectile: entity, dimension, location, source,

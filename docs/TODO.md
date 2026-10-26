@@ -4,8 +4,10 @@ Updated 2026-10-25 from owner feedback (Bedrock 1.26.52).
 
 ## Blast attribution test (2026-10-26)
 
-- [ ] Owner compares `native` / `grenade` / `player` blasts: [procedure](ATTRIBUTION_TEST.md).
-  Then keep one method, delete `blast_probe.js` and its import, and record the result.
+- [x] Native and player-sourced blasts ruled out in game (see procedure doc).
+- [ ] Owner tests the `scripted` method (default): [procedure](ATTRIBUTION_TEST.md). On
+  acceptance: delete `blast_probe.js`, its import and the `native`/`grenade` branches and
+  `gm:exploding` group; consider removing Lothlorien's `attacker.js` workaround.
 
 ## Awaiting in-game verification: flight rework (2026-10-26)
 

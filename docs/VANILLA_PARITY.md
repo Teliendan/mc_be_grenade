@@ -7,16 +7,17 @@ Target Bedrock 1.26.52 / Script API 2.8.0. History: git (inspection of 2026-10-2
 - Flight: readable lob (owner choice 2026-10-26, no snowball parity, no launch script):
   entity power 1.0, gravity 0.035, angle_offset -10, isolated_physics true; sprite drawn 1.5x with a client-side
   spark/smoke trail. Details: `FLIGHT.md`. Impact timing: see `IMPACT_TIMING.md`.
-- Blast: radius 3, `breaksBlocks:false`, `causesFire:false`, `allowUnderwater:true`.
-- The live grenade is passed as `ExplosionOptions.source`, and removed after the blast.
-  Native `minecraft:projectile` ownership keeps the shooter separate from the exploding
-  entity. Dispenser grenades receive no invented player owner. If the grenade has gone,
-  the captured valid shooter is used; if both are gone the blast is ownerless.
+- Blast (test build 2026-10-26, owner chose scripted damage): the grenade explodes itself
+  (`minecraft:explode` power 3, `damage_scaling` 0: sound, particles, knockback; no block
+  breaking, fire, underwater-proof), and the script applies the damage with
+  `applyDamage(cause entityExplosion, damagingEntity thrower)` so every pack sees the thrower.
+  Vanilla falloff over 6 blocks; exposure approximated by three rays (feet/middle/head).
+  The thrower's own damage carries no attacker. Dispenser grenades name the grenade.
+- Owner decision: items and XP orbs on the ground are not damaged (vanilla blasts destroy items).
+- Why (verified in game 2026-10-26, `ATTRIBUTION_TEST.md`): an exploding projectile reports
+  itself as attacker (native or script), and a player-sourced script blast damages nothing.
 - Block impacts move the landing/blast point 0.05 blocks out along the hit face, keeping
   the explosion origin outside the solid surface rather than exactly on its boundary.
-- 2026-10-25 feedback correction: the previous player-as-source blast did not hurt the
-  thrower and barely hurt nearby blazes/skeletons. The source/lifetime and surface-origin
-  corrections are source-tested; damage, XP and PvP attribution need an engine retest.
 - Not copied: snowball blaze damage, snow crafting, wind-charge door toggling, TNT priming.
 
 ## Known limits

@@ -38,40 +38,18 @@ test('shooter gone during the delay still blasts from the grenade', () => {
   assert.equal(blast(h).options.source, projectile);
 });
 
-test('missing grenade still explodes with the available shooter attribution', () => {
+test('missing grenade still explodes, ownerless (a player source would damage nothing)', () => {
   const h = harness({mode: 'grenade'}), projectile = h.projectile();
   h.hit('block', projectile, undefined, player);
-  projectile.isValid = false;
-  assert.equal(blast(h).options.source, player);
-});
-
-test('missing grenade and shooter still produce an ownerless explosion', () => {
-  const h = harness({mode: 'grenade'}), projectile = h.projectile();
-  h.hit('block', projectile);
   projectile.isValid = false;
   assert.equal(Object.hasOwn(blast(h).options, 'source'), false);
 });
 
 test('native method: the live grenade explodes itself, no script blast', () => {
-  const h = harness();
+  const h = harness({mode: 'native'});
   const projectile = h.projectile();
   h.hit('block', projectile, undefined, player);
   h.advance(20);
   assert.deepEqual(h.calls.filter(call => call.kind === 'detonate').map(call => call.event), ['gm:detonate']);
-  assert.equal(h.calls.some(call => call.kind === 'explosion' || call.kind === 'remove'), false);
-});
-
-test('native method: a grenade gone before detonation still blasts by script', () => {
-  const h = harness(), projectile = h.projectile();
-  h.hit('block', projectile, undefined, player);
-  projectile.isValid = false;
-  assert.equal(blast(h).options.source, player);
-});
-
-test('player method names the thrower; a dispenser grenade falls back to itself', () => {
-  for (const shooter of [player, undefined]) {
-    const h = harness({mode: 'player'}), projectile = h.projectile();
-    h.hit('block', projectile, undefined, shooter);
-    assert.equal(blast(h).options.source, shooter ?? projectile);
-  }
+  assert.equal(h.calls.some(call => ['explosion', 'remove', 'damage'].includes(call.kind)), false);
 });

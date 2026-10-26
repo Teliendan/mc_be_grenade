@@ -87,7 +87,7 @@ console.log('ok block impacts detonate outside all six solid faces');
 }
 
 {
-  const h = harness();
+  const h = harness({ mode: "grenade" });
   const p = h.projectile();
   h.hit("block", p);
   p.isValid = false;

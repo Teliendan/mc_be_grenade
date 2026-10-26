@@ -1,10 +1,16 @@
-import { world, system } from "@minecraft/server";
+import { world, system, EntityDamageCause } from "@minecraft/server";
 import { blastMode, startBlastProbe } from "./blast_probe.js";
 
 const PROJECTILE_ID = "gm:grenade_projectile";
 const EXPLOSION_RADIUS = 3;
-// Adds the entity's minecraft:explode group (vanilla fireball pattern).
+// Add the entity's minecraft:explode groups (vanilla fireball pattern): full damage, or
+// sound, particles and knockback only.
 const DETONATE_EVENT = "gm:detonate";
+const DETONATE_HARMLESS_EVENT = "gm:detonate_harmless";
+// Vanilla explosion damage reaches twice the explosion power and falls off linearly.
+const DAMAGE_RANGE = 2 * EXPLOSION_RADIUS;
+// Owner: items (and XP orbs) on the ground survive the blast.
+const UNHARMED_TYPES = ["minecraft:item", "minecraft:xp_orb", PROJECTILE_ID];
 const BLOCK_IMPACT_OFFSET = 0.05;
 const FACE_NORMALS = {
   Up: { x: 0, y: 1, z: 0 }, Down: { x: 0, y: -1, z: 0 },
@@ -23,6 +29,52 @@ const HIT_PARTICLE = "gm:grenade_poof";
 // show the landing before starting any explosion effects or removing the sprite.
 const IMPACT_SETTLE_TICKS = 3;
 const pendingImpacts = new Set();
+
+// Share of the entity the blast can see: rays to its feet, middle and head that no
+// solid block stops (vanilla samples a grid over the whole collision box).
+function exposure(dimension, center, entity) {
+  const feet = entity.location;
+  const head = entity.getHeadLocation();
+  const points = [
+    { x: feet.x, y: feet.y + 0.1, z: feet.z },
+    { x: feet.x, y: (feet.y + head.y) / 2, z: feet.z },
+    head,
+  ];
+  let seen = 0;
+  for (const point of points) {
+    const offset = { x: point.x - center.x, y: point.y - center.y, z: point.z - center.z };
+    const distance = Math.hypot(offset.x, offset.y, offset.z);
+    if (distance < 0.01) {
+      seen++;
+      continue;
+    }
+    const direction = { x: offset.x / distance, y: offset.y / distance, z: offset.z / distance };
+    if (!dimension.getBlockFromRay(center, direction, { maxDistance: distance })) seen++;
+  }
+  return seen / points.length;
+}
+
+// Apply the blast damage ourselves so every pack sees the thrower as the attacker:
+// an exploding grenade is reported as its own attacker, and a player-sourced script
+// explosion damages nothing (owner, 1.26.52). Vanilla falloff:
+// impact = (1 - distance / range) * exposure; damage = (impact^2 + impact) / 2 * 7 * range + 1.
+function damageAround(dimension, center, attacker) {
+  const entities = dimension.getEntities({ location: center, maxDistance: DAMAGE_RANGE, excludeTypes: UNHARMED_TYPES });
+  for (const entity of entities) {
+    try {
+      const feet = entity.location;
+      const distance = Math.hypot(feet.x - center.x, feet.y - center.y, feet.z - center.z);
+      const impact = (1 - distance / DAMAGE_RANGE) * exposure(dimension, center, entity);
+      if (impact <= 0) continue;
+      const options = { cause: EntityDamageCause.entityExplosion };
+      // The thrower's own blast is not an attack on themselves.
+      if (attacker && attacker.id !== entity.id) options.damagingEntity = attacker;
+      entity.applyDamage(((impact * impact + impact) / 2) * 7 * DAMAGE_RANGE + 1, options);
+    } catch {
+      /* entity gone */
+    }
+  }
+}
 
 function onHit(event) {
   let projectile;
@@ -57,7 +109,7 @@ function onHit(event) {
     location.y += normal.y * BLOCK_IMPACT_OFFSET;
     location.z += normal.z * BLOCK_IMPACT_OFFSET;
   }
-  // Dispensers have no source; a shooter gone after the delay still leaves a blast (ownerless).
+  // Dispensers have no source: their blasts name the grenade.
   const source = event.source;
 
   system.run(() => {
@@ -78,12 +130,19 @@ function onHit(event) {
       }
 
       const mode = blastMode();
-      if (mode === "native" && projectile.isValid) {
-        // The grenade explodes itself, like a vanilla fireball: the engine's own
-        // projectile blast, which may name the thrower as attacker. The engine
-        // removes the grenade.
+      if (mode !== "grenade") {
+        if (mode === "scripted") {
+          const attacker = source?.isValid ? source : projectile.isValid ? projectile : undefined;
+          try {
+            damageAround(dimension, location, attacker);
+          } catch {
+            /* chunk unloaded */
+          }
+        }
+        // The grenade explodes itself (the engine then removes it): harmless after the
+        // scripted damage, or with full native damage that names the grenade.
         try {
-          projectile.triggerEvent(DETONATE_EVENT);
+          if (projectile.isValid) projectile.triggerEvent(mode === "scripted" ? DETONATE_HARMLESS_EVENT : DETONATE_EVENT);
         } catch {
           /* chunk unloaded */
         }
@@ -91,12 +150,9 @@ function onHit(event) {
         return;
       }
 
+      // Script blast with the grenade as source: hurts the thrower, but kills name the grenade.
       const options = { breaksBlocks: false, causesFire: false, allowUnderwater: true };
-      // Script blast. A player source names the thrower as attacker but is immune
-      // to its own blast; a grenade source hurts the thrower, but kills name the grenade.
-      if (mode === "player" && source?.isValid) options.source = source;
-      else if (projectile.isValid) options.source = projectile;
-      else if (source?.isValid) options.source = source;
+      if (projectile.isValid) options.source = projectile;
       try {
         dimension.createExplosion(location, EXPLOSION_RADIUS, options);
       } catch {

@@ -4,9 +4,9 @@
 // Content Log (developer text, not localized): turn on the Content Log GUI to see it.
 import { system, world } from "@minecraft/server";
 
-const MODES = ["native", "grenade", "player"];
+const MODES = ["scripted", "native", "grenade"];
 const EXPLOSION_CAUSES = ["entityExplosion", "blockExplosion"];
-let mode = "native";
+let mode = "scripted";
 let logging = false;
 
 export const blastMode = () => mode;

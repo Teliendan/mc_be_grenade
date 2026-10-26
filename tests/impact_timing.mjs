@@ -14,11 +14,15 @@ for (const kind of ["block", "entity"]) {
   assert.equal(h.calls.length, 2, "no effects while the landing is settling");
   assert.equal(p.isValid, true, "keep the grenade visible until detonation");
   h.advance();
-  assert.deepEqual(h.calls.map((c) => c.kind), ["stop", "land", "particle", "explosion", "remove"]);
+  assert.deepEqual(h.calls.map((c) => c.kind), ["stop", "land", "particle", "explosion"]);
   for (const c of h.calls.slice(2, 4)) {
     assert.equal(c.tick, 4);
     assert.deepEqual(c.location, { x: 10, y: 64, z: 20 });
   }
+  assert.equal(p.isValid, true, "the grenade outlives its blast's death events (owner lookup)");
+  h.advance();
+  assert.equal(h.calls.at(-1).kind, "remove");
+  assert.equal(h.calls.at(-1).tick, 5);
   h.advance(10);
   assert.equal(h.calls.length, 5);
   console.log(`ok ${kind} hit: landing precedes all detonation effects`);

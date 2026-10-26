@@ -75,9 +75,10 @@ function onHit(event) {
       }
 
       const options = { breaksBlocks: false, causesFire: false, allowUnderwater: true };
-      // The exploding entity is the grenade, not its shooter. Keep it alive for
-      // the blast, preserving native projectile ownership for attacker attribution.
-      // The shooter must remain distinct from the direct exploding source.
+      // The exploding entity is the grenade, not its shooter, so the thrower is
+      // still damaged. Kills therefore name the grenade; other packs find the
+      // thrower as its projectile owner, so keep it alive until their after
+      // events for this tick have run.
       if (projectile.isValid) options.source = projectile;
       else if (source?.isValid) options.source = source;
       try {
@@ -85,12 +86,14 @@ function onHit(event) {
       } catch {
         /* chunk unloaded */
       }
-      try {
-        if (projectile.isValid) projectile.remove();
-      } catch {
-        /* already gone */
-      }
-      pendingImpacts.delete(projectileId);
+      system.run(() => {
+        try {
+          if (projectile.isValid) projectile.remove();
+        } catch {
+          /* already gone */
+        }
+        pendingImpacts.delete(projectileId);
+      });
     }, IMPACT_SETTLE_TICKS);
   });
 }

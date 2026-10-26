@@ -3,7 +3,8 @@
 Throwable grenade (`gm:grenade`): craft it from four copper nuggets and gunpowder, stack of
 16, throw it with use. It flies in a slow, visible arc trailing sparks and smoke, lands, and explodes about 0.15 s later with a green
 puff. The blast (radius 3) hurts entities but does not break blocks or start fires, and works
-underwater. Kills are credited to the thrower (XP, player-only drops). Dispensers can fire it too.
+underwater. Kills by a thrown grenade are meant to credit the thrower (XP and player-only drops await an
+in-game check); Lothlorien Harmony charges them to the thrower. Dispensers can fire it too.
 
 Packs: `grenade_bp/` + `grenade_rp/`. Deploy with `.\mods deploy grenade` from the workspace.
 Design, limits and in-game checks: [docs/VANILLA_PARITY.md](docs/VANILLA_PARITY.md).

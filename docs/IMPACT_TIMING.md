@@ -10,8 +10,11 @@ looked like the blast started before the grenade arrived. Handler order now:
    reported point can lie short of the face), then move 0.05 blocks outside it; later hit
    events for the same projectile are ignored.
 2. Next tick: stop and teleport the grenade to the impact point.
-3. After 3 ticks (about 150 ms): spawn the green poof, create the explosion with the live
-   grenade as its direct source, then remove the grenade in the same callback.
+3. After 3 ticks (about 150 ms): spawn the green poof and create the explosion with the live
+   grenade as its direct source.
+4. One tick later, remove the grenade. Kills name the grenade as attacker, so other packs
+   (Lothlorien Harmony, 2026-10-26) read the thrower from its projectile `owner` in their
+   death/hurt after events; those must still find it valid.
 
 Owner confirmed in game that the visual issue is fixed (2026-10-04).
 Regression coverage: `tests/impact_timing.mjs`.

@@ -4,6 +4,10 @@ Updated 2026-10-25 from owner feedback (Bedrock 1.26.52).
 
 ## Awaiting in-game verification: flight rework (2026-10-26)
 
+Round 3: owner accepted the arc and particles; sprite turned edge-on (billboard fixed).
+Lothlorien Harmony now charges grenade kills to the thrower (grenade removed one tick
+after its blast so the owner can be read).
+
 Round 2: first lob looked good but flew ~11 blocks regardless of pitch and fell almost
 vertically; blast looked above the ground. Now `isolated_physics: true` and block hits
 traced onto the struck face.

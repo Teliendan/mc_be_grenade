@@ -18,11 +18,11 @@
       },
       {
         "path": "grenade_bp/scripts/main.js",
-        "sha256": "2a974f4adc9d25add615bfb9adfdf05e061a3b9103135b0ff8bcf836af2a3bb6"
+        "sha256": "1cbe673f0f204f109151331190a28be2a5e54d2a31818bd5efaffa657ce4dd4f"
       },
       {
         "path": "grenade_rp/entity/grenade_projectile.entity.json",
-        "sha256": "900d696c57d1cd4a5741c0823aae3aa9cb9081ecd97ec2147c05000663bf5d59"
+        "sha256": "43c1b0a52ccef471716401625cf58e11aaa982c55ab5fcab67a3bd5dd60c4590"
       },
       {
         "path": "grenade_rp/particles/grenade_trail.json",
@@ -49,7 +49,7 @@
       },
       {
         "path": "grenade_bp/scripts/main.js",
-        "sha256": "2a974f4adc9d25add615bfb9adfdf05e061a3b9103135b0ff8bcf836af2a3bb6"
+        "sha256": "1cbe673f0f204f109151331190a28be2a5e54d2a31818bd5efaffa657ce4dd4f"
       }
     ]
   },
@@ -72,7 +72,7 @@
       },
       {
         "path": "grenade_bp/scripts/main.js",
-        "sha256": "2a974f4adc9d25add615bfb9adfdf05e061a3b9103135b0ff8bcf836af2a3bb6"
+        "sha256": "1cbe673f0f204f109151331190a28be2a5e54d2a31818bd5efaffa657ce4dd4f"
       }
     ]
   }

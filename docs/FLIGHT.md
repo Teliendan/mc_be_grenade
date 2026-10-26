@@ -10,7 +10,10 @@ custom launch script (the native `minecraft:throwable` throw stays).
   `angle_offset` -10 (aimed 10 degrees above the crosshair, like vanilla potions' -20),
   `isolated_physics: true` (explicit; see history). Entity format stays 1.21.120: newer
   formats change other projectile defaults.
-- Client entity: sprite drawn 1.5x (`scripts.scale`); collision box unchanged.
+- Client entity: sprite drawn 1.5x (`scripts.scale`); collision box unchanged. Own billboard
+  `animation.gm.grenade_projectile.billboard` = camera rotation minus `query.body_y_rotation`
+  (MS custom snowball). The vanilla `animation.actor.billboard` ignores the body yaw a custom
+  entity gets from its flight, so the sprite showed its edge to the thrower (owner, round 2).
 - Trail: `gm:grenade_trail`, a looping steady emitter started by a one-state animation
   controller. Particles stay in world space, so they are left behind the grenade; they are
   drawn every frame by the client, unlike a script `spawnParticle` trail. Vanilla smoke
@@ -40,3 +43,5 @@ then `gravity`. Checks: [TODO](TODO.md) F1-F4.
   power 2.4 for snowball reach. Now set explicitly; awaiting in-game check.
 - Same report: the blast looked centred above the ground. Block hits are now traced along
   `hitVector` onto the struck face before the 0.05 outward offset (`IMPACT_TIMING.md`).
+- Round 2 (commit 87443cb): owner: "much better"; particles good. Sprite turned edge-on
+  after the throw: fixed with the yaw-compensated billboard above.

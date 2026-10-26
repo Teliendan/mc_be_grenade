@@ -9,7 +9,7 @@
             "render_controllers": [ "controller.render.item_sprite" ],
             "particle_effects": { "trail": "gm:grenade_trail" },
             "animations": {
-                "flying": "animation.actor.billboard",
+                "flying": "animation.gm.grenade_projectile.billboard",
                 "trail": "controller.animation.gm.grenade_projectile.trail"
             },
             "scripts": {

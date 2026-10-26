@@ -5,6 +5,20 @@ import { runInNewContext } from "node:vm";
 const source = readFileSync(new URL("../../grenade_bp/scripts/main.js", import.meta.url), "utf8")
   .replace(/^import \{ world, system \} from "@minecraft\/server";\r?\n/, "");
 
+const NORMALS = {
+  Up: [0, 1, 0], Down: [0, -1, 0], East: [1, 0, 0], West: [-1, 0, 0], North: [0, 0, -1], South: [0, 0, 1],
+};
+
+function blockHit(location, spec) {
+  const { face, block, hitVector } = typeof spec === "string" ? { face: spec } : spec;
+  const [nx, ny, nz] = NORMALS[face];
+  const cell = block ?? {
+    x: Math.floor(location.x - nx / 2), y: Math.floor(location.y - ny / 2), z: Math.floor(location.z - nz / 2),
+  };
+  return { hitVector: hitVector ?? { x: -nx, y: -ny, z: -nz },
+    getBlockHit: () => ({ face, block: { location: cell } }) };
+}
+
 export function harness() {
   let tick = 0;
   const queue = [];
@@ -39,9 +53,10 @@ afterEvents: {
   });
   return {
     calls, dimension, projectile,
+    // `face` is a face name (head-on hit, reported on the face) or { face, block, hitVector }.
     hit(kind, entity, location = { x: 10, y: 64, z: 20 }, source, face) {
       handlers[kind]({ projectile: entity, dimension, location, source,
-        ...(face ? { getBlockHit: () => ({ face }) } : {}) });
+        ...(face ? blockHit(location, face) : {}) });
     },
     advance(count = 1) {
       for (let n = 0; n < count; n++) {

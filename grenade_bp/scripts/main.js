@@ -8,6 +8,7 @@ const FACE_NORMALS = {
   East: { x: 1, y: 0, z: 0 }, West: { x: -1, y: 0, z: 0 },
   North: { x: 0, y: 0, z: -1 }, South: { x: 0, y: 0, z: 1 },
 };
+const FACE_AXES = { Up: "y", Down: "y", East: "x", West: "x", North: "z", South: "z" };
 
 // Green replacement for the vanilla snowballpoof, which is a hardcoded level event and
 // cannot be recoloured. Shards are cut from the grenade's own sprite, so it matches the
@@ -36,10 +37,19 @@ function onHit(event) {
   // Take the position from the EVENT, not the entity: it is the true impact point.
   const dimension = event.dimension;
   const location = { ...event.location };
-  // A block impact lies exactly on the solid face. Keep the blast outside that
-  // surface so exposure rays do not start inside the block and shield nearby mobs.
   if (event.getBlockHit) {
-    const normal = FACE_NORMALS[event.getBlockHit().face];
+    const { block, face } = event.getBlockHit();
+    const normal = FACE_NORMALS[face];
+    // The reported location can sit short of the struck face (owner saw steep falls
+    // explode above the ground), so follow the flight direction onto the face plane.
+    const axis = FACE_AXES[face];
+    const plane = block.location[axis] + Math.max(normal[axis], 0);
+    const along = (plane - location[axis]) / event.hitVector[axis];
+    location.x += event.hitVector.x * along;
+    location.y += event.hitVector.y * along;
+    location.z += event.hitVector.z * along;
+    // Keep the blast just outside that surface so exposure rays do not start inside
+    // the block and shield nearby mobs.
     location.x += normal.x * BLOCK_IMPACT_OFFSET;
     location.y += normal.y * BLOCK_IMPACT_OFFSET;
     location.z += normal.z * BLOCK_IMPACT_OFFSET;

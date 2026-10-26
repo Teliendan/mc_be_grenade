@@ -38,6 +38,19 @@ for (const [face, expected] of Object.entries({
 console.log('ok block impacts detonate outside all six solid faces');
 
 {
+  // A steep fall reported half a block above the floor lands where its path meets the face.
+  const h = harness();
+  h.hit('block', h.projectile(), { x: 10, y: 64.5, z: 20 }, undefined,
+    { face: 'Up', block: { x: 10, y: 63, z: 20 }, hitVector: { x: 0.6, y: -0.8, z: 0 } });
+  h.advance(4);
+  for (const kind of ['land', 'explosion']) {
+    const { x, y, z } = h.calls.find(call => call.kind === kind).location;
+    assert.ok(Math.abs(x - 10.375) < 1e-9 && Math.abs(y - 64.05) < 1e-9 && z === 20, `${kind} at ${x},${y},${z}`);
+  }
+  console.log('ok a hit reported short of the face is traced onto it');
+}
+
+{
   const h = harness();
   const p = h.projectile();
   h.hit("entity", p);

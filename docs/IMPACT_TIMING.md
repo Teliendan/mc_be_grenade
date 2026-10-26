@@ -6,7 +6,9 @@ The client draws the projectile slightly behind its real position, so exploding 
 looked like the blast started before the grenade arrived. Handler order now:
 
 1. On the first hit event, copy the event `location` (the true impact point), dimension and
-   `source`; block hits offset that point 0.05 blocks outside the struck face; later hit events for the same projectile are ignored.
+   `source`; block hits follow `hitVector` from that point onto the struck face plane (the
+   reported point can lie short of the face), then move 0.05 blocks outside it; later hit
+   events for the same projectile are ignored.
 2. Next tick: stop and teleport the grenade to the impact point.
 3. After 3 ticks (about 150 ms): spawn the green poof, create the explosion with the live
    grenade as its direct source, then remove the grenade in the same callback.

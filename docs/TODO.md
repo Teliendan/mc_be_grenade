@@ -4,6 +4,10 @@ Updated 2026-10-25 from owner feedback (Bedrock 1.26.52).
 
 ## Awaiting in-game verification: flight rework (2026-10-26)
 
+Round 2: first lob looked good but flew ~11 blocks regardless of pitch and fell almost
+vertically; blast looked above the ground. Now `isolated_physics: true` and block hits
+traced onto the struck face.
+
 - [ ] F1: flight is easy to follow; spark/smoke trail visible and not distracting.
 - [ ] F2: range feels right (model estimate 15-25 blocks; tune `power`/`gravity`).
 - [ ] F3: blast still appears when the grenade visibly lands (3-tick delay unchanged).

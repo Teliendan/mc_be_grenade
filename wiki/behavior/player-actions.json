@@ -2,15 +2,15 @@
   {
     "featureId": "gm:grenade",
     "id": "gm:grenade/throw",
-    "text": "Use to throw. The grenade flies in an arc and explodes about {{gm:grenade/impact-delay}} seconds after impact, within a {{gm:grenade/blast-radius}}-block radius.",
+    "text": "Use to throw. The grenade flies in a slow, visible arc trailing sparks and smoke, and explodes about {{gm:grenade/impact-delay}} seconds after impact, within a {{gm:grenade/blast-radius}}-block radius.",
     "evidence": [
       {
         "path": "docs/VANILLA_PARITY.md",
-        "sha256": "5a5f290ba10331ad417cc7d07d3ae07ff0476cb27e4808718916f54144a03f9e"
+        "sha256": "44435180f05c3551f1858e87aacfc1ad1baa9fb407ad7ee40290b251e24cb70b"
       },
       {
         "path": "grenade_bp/entities/grenade_projectile.json",
-        "sha256": "f81fed648f269d5810750df8517f8863f78e8c083fb9b334f62517a25917815f"
+        "sha256": "548e70e191b7d68c425c218d387158e34f62f087fa0bd56225634082ba825ceb"
       },
       {
         "path": "grenade_bp/items/grenade.json",
@@ -19,6 +19,14 @@
       {
         "path": "grenade_bp/scripts/main.js",
         "sha256": "c730dbe7a6051d6a482e8a6742c21dfeee2fc7d981432a7745bd1f32167682c6"
+      },
+      {
+        "path": "grenade_rp/entity/grenade_projectile.entity.json",
+        "sha256": "900d696c57d1cd4a5741c0823aae3aa9cb9081ecd97ec2147c05000663bf5d59"
+      },
+      {
+        "path": "grenade_rp/particles/grenade_trail.json",
+        "sha256": "789531a11b06f179ee08b30be86e98978b08a4f814645f4abfe3d469673b1fdf"
       }
     ]
   },
@@ -29,11 +37,11 @@
     "evidence": [
       {
         "path": "docs/VANILLA_PARITY.md",
-        "sha256": "5a5f290ba10331ad417cc7d07d3ae07ff0476cb27e4808718916f54144a03f9e"
+        "sha256": "44435180f05c3551f1858e87aacfc1ad1baa9fb407ad7ee40290b251e24cb70b"
       },
       {
         "path": "grenade_bp/entities/grenade_projectile.json",
-        "sha256": "f81fed648f269d5810750df8517f8863f78e8c083fb9b334f62517a25917815f"
+        "sha256": "548e70e191b7d68c425c218d387158e34f62f087fa0bd56225634082ba825ceb"
       },
       {
         "path": "grenade_bp/items/grenade.json",
@@ -52,11 +60,11 @@
     "evidence": [
       {
         "path": "docs/VANILLA_PARITY.md",
-        "sha256": "5a5f290ba10331ad417cc7d07d3ae07ff0476cb27e4808718916f54144a03f9e"
+        "sha256": "44435180f05c3551f1858e87aacfc1ad1baa9fb407ad7ee40290b251e24cb70b"
       },
       {
         "path": "grenade_bp/entities/grenade_projectile.json",
-        "sha256": "f81fed648f269d5810750df8517f8863f78e8c083fb9b334f62517a25917815f"
+        "sha256": "548e70e191b7d68c425c218d387158e34f62f087fa0bd56225634082ba825ceb"
       },
       {
         "path": "grenade_bp/items/grenade.json",

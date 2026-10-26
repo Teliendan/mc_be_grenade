@@ -2,13 +2,14 @@
 
 Updated 2026-10-25 from owner feedback (Bedrock 1.26.52).
 
-## Deferred redesign
+## Awaiting in-game verification: flight rework (2026-10-26)
 
-- [ ] Redo the flight/physics model. Current grenades travel so fast they are difficult
-  to see. Measure vanilla snowball launch/arc and current grenade server/client positions,
-  then design a slower readable flight without losing range or impact synchronization.
-  Keep the graphics/landing acceptance and player/dispenser ownership behavior in scope.
-  This testing-fix pass deliberately leaves power, gravity and entity format unchanged.
+- [ ] F1: flight is easy to follow; spark/smoke trail visible and not distracting.
+- [ ] F2: range feels right (model estimate 15-25 blocks; tune `power`/`gravity`).
+- [ ] F3: blast still appears when the grenade visibly lands (3-tick delay unchanged).
+- [ ] F4: dispenser shot still launches and detonates with the new values.
+
+Details: [flight notes](FLIGHT.md).
 
 ## Awaiting in-game verification
 

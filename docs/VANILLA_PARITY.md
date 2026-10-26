@@ -4,7 +4,9 @@ Target Bedrock 1.26.52 / Script API 2.8.0. History: git (inspection of 2026-10-2
 
 ## Design (counterparts: snowball projectile, TNT blast)
 - Native `throwable` + `projectile` item (so dispensers work), stack 16, custom 0.5 s cooldown.
-- Flight: entity power 2.4, gravity 0.03. Impact timing: see `IMPACT_TIMING.md`.
+- Flight: readable lob (owner choice 2026-10-26, no snowball parity, no launch script):
+  entity power 1.0, gravity 0.035, angle_offset -10; sprite drawn 1.5x with a client-side
+  spark/smoke trail. Details: `FLIGHT.md`. Impact timing: see `IMPACT_TIMING.md`.
 - Blast: radius 3, `breaksBlocks:false`, `causesFire:false`, `allowUnderwater:true`.
 - The live grenade is passed as `ExplosionOptions.source`, and removed after the blast.
   Native `minecraft:projectile` ownership keeps the shooter separate from the exploding

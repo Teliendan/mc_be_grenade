@@ -7,8 +7,15 @@
             "textures": { "default": "textures/grenade" },
             "geometry": { "default": "geometry.item_sprite" },
             "render_controllers": [ "controller.render.item_sprite" ],
-            "animations": { "flying": "animation.actor.billboard" },
-            "scripts": { "animate": [ "flying" ] }
+            "particle_effects": { "trail": "gm:grenade_trail" },
+            "animations": {
+                "flying": "animation.actor.billboard",
+                "trail": "controller.animation.gm.grenade_projectile.trail"
+            },
+            "scripts": {
+                "scale": "1.5",
+                "animate": [ "flying", "trail" ]
+            }
         }
     }
 }

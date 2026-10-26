@@ -16,9 +16,9 @@
             },
             "minecraft:physics": {},
             "minecraft:projectile": {
-                "power": 2.4,
-                "gravity": 0.03,
-                "angle_offset": 0.0
+                "power": 1.0,
+                "gravity": 0.035,
+                "angle_offset": -10.0
             },
             "minecraft:pushable": {
                 "is_pushable": true,

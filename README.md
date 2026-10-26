@@ -1,7 +1,7 @@
 # Grenade
 
 Throwable grenade (`gm:grenade`): craft it from four copper nuggets and gunpowder, stack of
-16, throw it with use. It flies in an arc, lands, and explodes about 0.15 s later with a green
+16, throw it with use. It flies in a slow, visible arc trailing sparks and smoke, lands, and explodes about 0.15 s later with a green
 puff. The blast (radius 3) hurts entities but does not break blocks or start fires, and works
 underwater. Kills are credited to the thrower (XP, player-only drops). Dispensers can fire it too.
 

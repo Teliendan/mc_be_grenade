@@ -30,6 +30,10 @@ Dispenser shots stay ownerless by design.
 
 | Method | Attacker shown | XP orbs | Zombie retaliates | Self-damage |
 | --- | --- | --- | --- | --- |
-| native | | | | |
-| grenade | | | | |
-| player | | | | |
+| native | `gm:grenade_projectile` (projectile: none) | | | |
+| grenade | `gm:grenade_projectile` (projectile: none) | | | |
+| player | not run yet | | | |
+
+Owner readout, Bedrock 1.26.52, 2026-10-26 (unicorn and swan hits/kills, cause
+`entityExplosion`): the native `minecraft:explode` route names the grenade exactly like the
+script blast does, so it does not give the thrower credit. Hits did 4.7-36.3 damage.

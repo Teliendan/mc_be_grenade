@@ -32,8 +32,12 @@ Dispenser shots stay ownerless by design.
 | --- | --- | --- | --- | --- |
 | native | `gm:grenade_projectile` (projectile: none) | | | |
 | grenade | `gm:grenade_projectile` (projectile: none) | | | |
-| player | not run yet | | | |
+| player | none: the blast did no damage to mobs (owner, 2026-10-26) | | | |
 
 Owner readout, Bedrock 1.26.52, 2026-10-26 (unicorn and swan hits/kills, cause
 `entityExplosion`): the native `minecraft:explode` route names the grenade exactly like the
 script blast does, so it does not give the thrower credit. Hits did 4.7-36.3 damage.
+With the thrower as `createExplosion` source the blast damaged no mobs at all (this also
+explains the 2026-10-25 "blazes and skeletons hardly take damage" report). No explosion
+source both credits the thrower and does damage. Remaining route: the script applies the
+damage itself with `applyDamage(amount, { cause: entityExplosion, damagingEntity: thrower })`.

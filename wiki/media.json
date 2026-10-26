@@ -1,0 +1,9 @@
+[
+  {
+    "id": "gm:grenade/icon",
+    "featureId": "gm:grenade",
+    "source": "grenade_rp/textures/grenade.png",
+    "kind": "item",
+    "alt": "Grenade"
+  }
+]

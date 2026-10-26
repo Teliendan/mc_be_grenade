@@ -1,0 +1,25 @@
+[
+  {
+    "featureId": "gm:grenade",
+    "id": "gm:grenade/unload",
+    "text": "A grenade can fail to explode if the area unloads immediately after impact.",
+    "evidence": [
+      {
+        "path": "docs/VANILLA_PARITY.md",
+        "sha256": "5a5f290ba10331ad417cc7d07d3ae07ff0476cb27e4808718916f54144a03f9e"
+      },
+      {
+        "path": "grenade_bp/entities/grenade_projectile.json",
+        "sha256": "7ed187b9517b0fd738ecc509cd5889deb71a073095c5d533ab2a80c17b3ab15a"
+      },
+      {
+        "path": "grenade_bp/items/grenade.json",
+        "sha256": "8be77825d32d6420f383174bd22bab4a5eca92cc408e8513d3bfb399615d4cbe"
+      },
+      {
+        "path": "grenade_bp/scripts/main.js",
+        "sha256": "7a5a82e6e5acec862f4eba894d7791d141fb314a03a04bd6f20666d42fb7f519"
+      }
+    ]
+  }
+]

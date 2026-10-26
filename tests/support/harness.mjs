@@ -28,6 +28,7 @@ afterEvents: {
       assert.equal(options.allowUnderwater, true);
       record("explosion", location);
       calls[calls.length - 1].options = options;
+      calls[calls.length - 1].sourceWasValid = options.source?.isValid;
     },
   };
   const projectile = (id = "grenade-1", typeId = "gm:grenade_projectile") => ({
@@ -38,8 +39,9 @@ afterEvents: {
   });
   return {
     calls, dimension, projectile,
-    hit(kind, entity, location = { x: 10, y: 64, z: 20 }, source) {
-      handlers[kind]({ projectile: entity, dimension, location, source });
+    hit(kind, entity, location = { x: 10, y: 64, z: 20 }, source, face) {
+      handlers[kind]({ projectile: entity, dimension, location, source,
+        ...(face ? { getBlockHit: () => ({ face }) } : {}) });
     },
     advance(count = 1) {
       for (let n = 0; n < count; n++) {

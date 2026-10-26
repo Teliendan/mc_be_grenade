@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 2,
+  "id": "grenade",
+  "name": "Grenade",
+  "locale": "en_US",
+  "adapter": "bedrock",
+  "behaviorPacks": [
+    "grenade_bp"
+  ],
+  "resourcePacks": [
+    "grenade_rp"
+  ],
+  "coverage": [
+    {
+      "pattern": "grenade_bp/scripts/main.js",
+      "featureId": "gm:grenade"
+    }
+  ],
+  "ruleValues": [
+    {
+      "id": "gm:grenade/blast-radius",
+      "file": "grenade_bp/scripts/main.js",
+      "constant": "EXPLOSION_RADIUS",
+      "label": "Explosion radius",
+      "unit": "blocks",
+      "featureId": "gm:grenade"
+    },
+    {
+      "id": "gm:grenade/impact-delay",
+      "file": "grenade_bp/scripts/main.js",
+      "constant": "IMPACT_SETTLE_TICKS",
+      "label": "Delay after impact",
+      "unit": "seconds",
+      "scale": 0.05,
+      "featureId": "gm:grenade"
+    }
+  ]
+}

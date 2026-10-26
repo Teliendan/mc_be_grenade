@@ -11,23 +11,43 @@ function blast(h) {
 }
 
 for (const kind of ['block', 'entity']) {
-  test(`${kind} hit forwards the shooter as explosion source`, () => {
+  test(`${kind} hit uses the live grenade as the direct explosion source`, () => {
     const h = harness();
-    h.hit(kind, h.projectile(), undefined, player);
-    assert.equal(blast(h).options.source, player);
+    const projectile = h.projectile();
+    h.hit(kind, projectile, undefined, player);
+    const result = blast(h);
+    assert.equal(result.options.source, projectile);
+    assert.equal(result.sourceWasValid, true);
+    assert.equal(projectile.isValid, false, 'remove after the explosion');
   });
 }
 
-test('ownerless hit (dispenser) stays ownerless', () => {
+test('dispenser grenade is the source without assigning a player', () => {
   const h = harness();
-  h.hit('block', h.projectile());
-  assert.equal(Object.hasOwn(blast(h).options, 'source'), false);
+  const projectile = h.projectile();
+  h.hit('block', projectile);
+  assert.equal(blast(h).options.source, projectile);
 });
 
-test('shooter gone during the delay still blasts, ownerless', () => {
+test('shooter gone during the delay still blasts from the grenade', () => {
   const h = harness(), shooter = {...player};
-  h.hit('block', h.projectile(), undefined, shooter);
+  const projectile = h.projectile();
+  h.hit('block', projectile, undefined, shooter);
   h.advance();
   shooter.isValid = false;
+  assert.equal(blast(h).options.source, projectile);
+});
+
+test('missing grenade still explodes with the available shooter attribution', () => {
+  const h = harness(), projectile = h.projectile();
+  h.hit('block', projectile, undefined, player);
+  projectile.isValid = false;
+  assert.equal(blast(h).options.source, player);
+});
+
+test('missing grenade and shooter still produce an ownerless explosion', () => {
+  const h = harness(), projectile = h.projectile();
+  h.hit('block', projectile);
+  projectile.isValid = false;
   assert.equal(Object.hasOwn(blast(h).options, 'source'), false);
 });

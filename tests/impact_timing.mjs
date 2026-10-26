@@ -14,8 +14,8 @@ for (const kind of ["block", "entity"]) {
   assert.equal(h.calls.length, 2, "no effects while the landing is settling");
   assert.equal(p.isValid, true, "keep the grenade visible until detonation");
   h.advance();
-  assert.deepEqual(h.calls.map((c) => c.kind), ["stop", "land", "remove", "particle", "explosion"]);
-  for (const c of h.calls.slice(3)) {
+  assert.deepEqual(h.calls.map((c) => c.kind), ["stop", "land", "particle", "explosion", "remove"]);
+  for (const c of h.calls.slice(2, 4)) {
     assert.equal(c.tick, 4);
     assert.deepEqual(c.location, { x: 10, y: 64, z: 20 });
   }
@@ -23,6 +23,19 @@ for (const kind of ["block", "entity"]) {
   assert.equal(h.calls.length, 5);
   console.log(`ok ${kind} hit: landing precedes all detonation effects`);
 }
+
+for (const [face, expected] of Object.entries({
+  Up: {x: 10, y: 64.05, z: 20}, Down: {x: 10, y: 63.95, z: 20},
+  East: {x: 10.05, y: 64, z: 20}, West: {x: 9.95, y: 64, z: 20},
+  North: {x: 10, y: 64, z: 19.95}, South: {x: 10, y: 64, z: 20.05},
+})) {
+  const h = harness();
+  h.hit('block', h.projectile(), undefined, undefined, face);
+  h.advance(4);
+  assert.deepEqual(h.calls.find(call => call.kind === 'explosion').location, expected);
+  assert.deepEqual(h.calls.find(call => call.kind === 'land').location, expected);
+}
+console.log('ok block impacts detonate outside all six solid faces');
 
 {
   const h = harness();

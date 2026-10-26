@@ -2,6 +2,11 @@
 
 Updated 2026-10-25 from owner feedback (Bedrock 1.26.52).
 
+## Blast attribution test (2026-10-26)
+
+- [ ] Owner compares `native` / `grenade` / `player` blasts: [procedure](ATTRIBUTION_TEST.md).
+  Then keep one method, delete `blast_probe.js` and its import, and record the result.
+
 ## Awaiting in-game verification: flight rework (2026-10-26)
 
 Round 3: owner accepted the arc and particles; sprite turned edge-on (billboard fixed).

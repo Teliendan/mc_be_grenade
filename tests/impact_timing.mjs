@@ -2,7 +2,22 @@ import assert from "node:assert/strict";
 import {harness} from "./support/harness.mjs";
 
 for (const kind of ["block", "entity"]) {
-  const h = harness();
+  const h = harness({ mode: "native" });
+  const p = h.projectile();
+  h.hit(kind, p, { x: 10, y: 64, z: 20 });
+  h.advance(3);
+  assert.deepEqual(h.calls.map((c) => c.kind), ["stop", "land"]);
+  h.advance();
+  assert.deepEqual(h.calls.map((c) => c.kind), ["stop", "land", "particle", "detonate"]);
+  assert.equal(h.calls[3].event, "gm:detonate");
+  assert.equal(h.calls[3].tick, 4);
+  h.advance(10);
+  assert.equal(h.calls.length, 4, "native: the engine explodes and removes the grenade");
+  console.log(`ok ${kind} hit (native): landing, poof, then the grenade's own explosion`);
+}
+
+for (const kind of ["block", "entity"]) {
+  const h = harness({ mode: "grenade" });
   const p = h.projectile();
   const impact = { x: 10, y: 64, z: 20 };
   h.hit(kind, p, impact);
@@ -25,7 +40,7 @@ for (const kind of ["block", "entity"]) {
   assert.equal(h.calls.at(-1).tick, 5);
   h.advance(10);
   assert.equal(h.calls.length, 5);
-  console.log(`ok ${kind} hit: landing precedes all detonation effects`);
+  console.log(`ok ${kind} hit (script blast): landing precedes all detonation effects`);
 }
 
 for (const [face, expected] of Object.entries({
@@ -33,7 +48,7 @@ for (const [face, expected] of Object.entries({
   East: {x: 10.05, y: 64, z: 20}, West: {x: 9.95, y: 64, z: 20},
   North: {x: 10, y: 64, z: 19.95}, South: {x: 10, y: 64, z: 20.05},
 })) {
-  const h = harness();
+  const h = harness({ mode: "grenade" });
   h.hit('block', h.projectile(), undefined, undefined, face);
   h.advance(4);
   assert.deepEqual(h.calls.find(call => call.kind === 'explosion').location, expected);
@@ -43,7 +58,7 @@ console.log('ok block impacts detonate outside all six solid faces');
 
 {
   // A steep fall reported half a block above the floor lands where its path meets the face.
-  const h = harness();
+  const h = harness({ mode: "grenade" });
   h.hit('block', h.projectile(), { x: 10, y: 64.5, z: 20 }, undefined,
     { face: 'Up', block: { x: 10, y: 63, z: 20 }, hitVector: { x: 0.6, y: -0.8, z: 0 } });
   h.advance(4);
@@ -55,7 +70,7 @@ console.log('ok block impacts detonate outside all six solid faces');
 }
 
 {
-  const h = harness();
+  const h = harness({ mode: "grenade" });
   const p = h.projectile();
   h.hit("entity", p);
   h.hit("block", p, { x: 99, y: 99, z: 99 });

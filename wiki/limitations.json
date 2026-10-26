@@ -10,7 +10,7 @@
       },
       {
         "path": "grenade_bp/entities/grenade_projectile.json",
-        "sha256": "c3ed8e38e345374565fdec7f03b61d1cd74ac09d094f2a79e551632bf3bf782d"
+        "sha256": "5c4d89bf9516c504ae48d25a04a848955290a13213d973ddc7228c0ef8700060"
       },
       {
         "path": "grenade_bp/items/grenade.json",
@@ -18,7 +18,7 @@
       },
       {
         "path": "grenade_bp/scripts/main.js",
-        "sha256": "1cbe673f0f204f109151331190a28be2a5e54d2a31818bd5efaffa657ce4dd4f"
+        "sha256": "d34221443f989c725cbc78b944e6bdd37a42adf50248615f75ea34d3bbe7769d"
       }
     ]
   }

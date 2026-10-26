@@ -6,6 +6,23 @@
             "is_spawnable": false,
             "is_summonable": true
         },
+        "component_groups": {
+            "gm:exploding": {
+                "minecraft:explode": {
+                    "power": 3,
+                    "breaks_blocks": false,
+                    "causes_fire": false,
+                    "allow_underwater": true,
+                    "fuse_lit": true,
+                    "fuse_length": 0
+                }
+            }
+        },
+        "events": {
+            "gm:detonate": {
+                "add": { "component_groups": [ "gm:exploding" ] }
+            }
+        },
         "components": {
             "minecraft:type_family": {
                 "family": ["projectile"]

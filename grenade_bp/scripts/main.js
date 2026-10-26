@@ -1,7 +1,10 @@
 import { world, system } from "@minecraft/server";
+import { blastMode, startBlastProbe } from "./blast_probe.js";
 
 const PROJECTILE_ID = "gm:grenade_projectile";
 const EXPLOSION_RADIUS = 3;
+// Adds the entity's minecraft:explode group (vanilla fireball pattern).
+const DETONATE_EVENT = "gm:detonate";
 const BLOCK_IMPACT_OFFSET = 0.05;
 const FACE_NORMALS = {
   Up: { x: 0, y: 1, z: 0 }, Down: { x: 0, y: -1, z: 0 },
@@ -74,12 +77,25 @@ function onHit(event) {
         /* chunk unloaded */
       }
 
+      const mode = blastMode();
+      if (mode === "native" && projectile.isValid) {
+        // The grenade explodes itself, like a vanilla fireball: the engine's own
+        // projectile blast, which may name the thrower as attacker. The engine
+        // removes the grenade.
+        try {
+          projectile.triggerEvent(DETONATE_EVENT);
+        } catch {
+          /* chunk unloaded */
+        }
+        pendingImpacts.delete(projectileId);
+        return;
+      }
+
       const options = { breaksBlocks: false, causesFire: false, allowUnderwater: true };
-      // The exploding entity is the grenade, not its shooter, so the thrower is
-      // still damaged. Kills therefore name the grenade; other packs find the
-      // thrower as its projectile owner, so keep it alive until their after
-      // events for this tick have run.
-      if (projectile.isValid) options.source = projectile;
+      // Script blast. A player source names the thrower as attacker but is immune
+      // to its own blast; a grenade source hurts the thrower, but kills name the grenade.
+      if (mode === "player" && source?.isValid) options.source = source;
+      else if (projectile.isValid) options.source = projectile;
       else if (source?.isValid) options.source = source;
       try {
         dimension.createExplosion(location, EXPLOSION_RADIUS, options);
@@ -99,6 +115,7 @@ function onHit(event) {
 }
 
 world.afterEvents.worldLoad.subscribe(() => {
+  startBlastProbe();
   world.afterEvents.projectileHitBlock.subscribe(onHit);
   world.afterEvents.projectileHitEntity.subscribe(onHit);
 });

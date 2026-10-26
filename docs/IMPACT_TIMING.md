@@ -10,9 +10,11 @@ looked like the blast started before the grenade arrived. Handler order now:
    reported point can lie short of the face), then move 0.05 blocks outside it; later hit
    events for the same projectile are ignored.
 2. Next tick: stop and teleport the grenade to the impact point.
-3. After 3 ticks (about 150 ms): spawn the green poof and create the explosion with the live
-   grenade as its direct source.
-4. One tick later, remove the grenade. Kills name the grenade as attacker, so other packs
+3. After 3 ticks (about 150 ms): spawn the green poof and detonate. Default (test build
+   2026-10-26): fire `gm:detonate`, whose `minecraft:explode` group makes the grenade explode
+   itself; the engine removes it. Script methods (`blast_probe.js`, `ATTRIBUTION_TEST.md`):
+   create the explosion with the grenade (or thrower) as source.
+4. Script methods only: one tick later, remove the grenade. Kills name the grenade as attacker, so other packs
    (Lothlorien Harmony, 2026-10-26) read the thrower from its projectile `owner` in their
    death/hurt after events; those must still find it valid.
 

@@ -3,7 +3,8 @@ import { readFileSync } from "node:fs";
 import { runInNewContext } from "node:vm";
 
 const source = readFileSync(new URL("../../grenade_bp/scripts/main.js", import.meta.url), "utf8")
-  .replace(/^import \{ world, system \} from "@minecraft\/server";\r?\n/, "");
+  .replace(/^import \{ world, system \} from "@minecraft\/server";\r?\n/, "")
+  .replace(/^import \{ blastMode, startBlastProbe \} from "\.\/blast_probe\.js";\r?\n/, "");
 
 const NORMALS = {
   Up: [0, 1, 0], Down: [0, -1, 0], East: [1, 0, 0], West: [-1, 0, 0], North: [0, 0, -1], South: [0, 0, 1],
@@ -19,7 +20,8 @@ function blockHit(location, spec) {
     getBlockHit: () => ({ face, block: { location: cell } }) };
 }
 
-export function harness() {
+// `mode` is the blast method from blast_probe.js: native, grenade or player.
+export function harness({ mode = "native" } = {}) {
   let tick = 0;
   const queue = [];
   const handlers = {};
@@ -30,7 +32,8 @@ export function harness() {
 afterEvents: {
     worldLoad: signal("load"), projectileHitBlock: signal("block"), projectileHitEntity: signal("entity"),
   } };
-  runInNewContext(source, { world, system: { run: schedule, runTimeout: schedule } });
+  runInNewContext(source, { world, system: { run: schedule, runTimeout: schedule },
+    blastMode: () => mode, startBlastProbe() {} });
   handlers.load();
   const record = (kind, location) => calls.push({ kind, tick, location: { ...location } });
   const dimension = {
@@ -50,6 +53,7 @@ afterEvents: {
     clearVelocity() { record("stop", {}); },
     teleport(location) { record("land", location); },
     remove() { this.isValid = false; record("remove", {}); },
+    triggerEvent(event) { record("detonate", {}); calls[calls.length - 1].event = event; },
   });
   return {
     calls, dimension, projectile,

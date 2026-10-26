@@ -7,8 +7,9 @@ const EXPLOSION_RADIUS = 3;
 // sound, particles and knockback only.
 const DETONATE_EVENT = "gm:detonate";
 const DETONATE_HARMLESS_EVENT = "gm:detonate_harmless";
-// Vanilla explosion damage reaches twice the explosion power and falls off linearly.
-const DAMAGE_RANGE = 2 * EXPLOSION_RADIUS;
+// Vanilla explosion damage reaches twice the explosion power (EXPLOSION_RADIUS) and
+// falls off linearly.
+const DAMAGE_RANGE = 6;
 // Owner: items (and XP orbs) on the ground survive the blast.
 const UNHARMED_TYPES = ["minecraft:item", "minecraft:xp_orb", PROJECTILE_ID];
 const BLOCK_IMPACT_OFFSET = 0.05;

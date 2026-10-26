@@ -26,15 +26,15 @@
         },
         {
           "path": "grenade_bp/entities/grenade_projectile.json",
-          "sha256": "7ed187b9517b0fd738ecc509cd5889deb71a073095c5d533ab2a80c17b3ab15a"
+          "sha256": "f81fed648f269d5810750df8517f8863f78e8c083fb9b334f62517a25917815f"
         },
         {
           "path": "grenade_bp/items/grenade.json",
-          "sha256": "8be77825d32d6420f383174bd22bab4a5eca92cc408e8513d3bfb399615d4cbe"
+          "sha256": "8ee390e415ccd7d35d997e09fcf453cb59d2f21b83255092031f5989e32fa52e"
         },
         {
           "path": "grenade_bp/scripts/main.js",
-          "sha256": "7a5a82e6e5acec862f4eba894d7791d141fb314a03a04bd6f20666d42fb7f519"
+          "sha256": "c730dbe7a6051d6a482e8a6742c21dfeee2fc7d981432a7745bd1f32167682c6"
         }
       ]
     }

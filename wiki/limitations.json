@@ -6,11 +6,11 @@
     "evidence": [
       {
         "path": "docs/VANILLA_PARITY.md",
-        "sha256": "12566fbf1fdafe7ff856b817242500dd640964990d49b0e76616ac8a56cd16db"
+        "sha256": "18ac897a493b5741fca6f414fd2d44b89a449e32eff711f5738e9eec073ef9ff"
       },
       {
         "path": "grenade_bp/entities/grenade_projectile.json",
-        "sha256": "bc6c819a4ae8258c40610b79035e30197542c2e95a0a5bbe23cb83413dd8e790"
+        "sha256": "f44a3462107be0c0b0b8668bcd05ee74ba27fd17964b6e4bff0a948073db8029"
       },
       {
         "path": "grenade_bp/items/grenade.json",
@@ -18,7 +18,7 @@
       },
       {
         "path": "grenade_bp/scripts/main.js",
-        "sha256": "087a8eee8b87e66b2c0247b6de4441edace425bbf0ce65f7c59c6dee470dbf15"
+        "sha256": "2a95446e44bb016f28590a077d6cb9d943ad5682fffae20073a9b31550890379"
       }
     ]
   }

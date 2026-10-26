@@ -10,16 +10,6 @@
             "gm:exploding": {
                 "minecraft:explode": {
                     "power": 3,
-                    "breaks_blocks": false,
-                    "causes_fire": false,
-                    "allow_underwater": true,
-                    "fuse_lit": true,
-                    "fuse_length": 0
-                }
-            },
-            "gm:exploding_harmless": {
-                "minecraft:explode": {
-                    "power": 3,
                     "damage_scaling": 0,
                     "breaks_blocks": false,
                     "causes_fire": false,
@@ -32,9 +22,6 @@
         "events": {
             "gm:detonate": {
                 "add": { "component_groups": [ "gm:exploding" ] }
-            },
-            "gm:detonate_harmless": {
-                "add": { "component_groups": [ "gm:exploding_harmless" ] }
             }
         },
         "components": {

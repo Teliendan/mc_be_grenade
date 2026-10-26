@@ -18,7 +18,7 @@ const damages = (h) => h.calls.filter((c) => c.kind === "damage");
   const grenade = h.projectile();
   h.hit("block", grenade, { ...center }, player);
   h.advance(4);
-  assert.deepEqual(plain(h.dimension.query), { location: center, maxDistance: 6,
+  assert.deepEqual(plain(h.calls.find((c) => c.kind === "query").query), { location: center, maxDistance: 6,
     excludeTypes: ["minecraft:item", "minecraft:xp_orb", "gm:grenade_projectile"] });
   const [a, b, c] = damages(h);
   near(a.amount, 43);
@@ -30,9 +30,8 @@ const damages = (h) => h.calls.filter((c) => c.kind === "damage");
   }
   assert.deepEqual(plain(c.options), { cause: "entityExplosion" });
   const detonation = h.calls.find((call) => call.kind === "detonate");
-  assert.equal(detonation.event, "gm:detonate_harmless");
+  assert.equal(detonation.event, "gm:detonate");
   assert.ok(h.calls.indexOf(detonation) > h.calls.indexOf(c), "damage first, then the harmless engine blast");
-  assert.equal(h.calls.some((call) => call.kind === "explosion"), false);
   console.log("ok scripted blast: vanilla falloff, thrower credited, harmless visual blast");
 }
 
@@ -52,6 +51,27 @@ const damages = (h) => h.calls.filter((c) => c.kind === "damage");
   hidden.advance(4);
   assert.equal(damages(hidden).length, 0, "fully behind a wall: no damage");
   console.log("ok scripted blast: cover reduces or blocks the damage");
+}
+
+{
+  // A thrower who left during the landing delay: the damage names the grenade.
+  const h = harness(), thrower = { ...player };
+  h.dimension.nearby = [h.mob("zombie", { ...center })];
+  const grenade = h.projectile();
+  h.hit("block", grenade, { ...center }, thrower);
+  h.advance();
+  thrower.isValid = false;
+  h.advance(3);
+  assert.equal(damages(h)[0].options.damagingEntity, grenade);
+
+  // Grenade and thrower both gone: the damage still lands, with no attacker.
+  const bare = harness(), gone = bare.projectile();
+  bare.dimension.nearby = [bare.mob("zombie", { ...center })];
+  bare.hit("block", gone, { ...center });
+  gone.isValid = false;
+  bare.advance(4);
+  assert.deepEqual(plain(damages(bare)[0].options), { cause: "entityExplosion" });
+  console.log("ok scripted blast: attacker falls back to the grenade, then to none");
 }
 
 {

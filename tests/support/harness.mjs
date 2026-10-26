@@ -1,10 +1,8 @@
-import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { runInNewContext } from "node:vm";
 
 const source = readFileSync(new URL("../../grenade_bp/scripts/main.js", import.meta.url), "utf8")
-  .replace(/^import \{ world, system, EntityDamageCause \} from "@minecraft\/server";\r?\n/, "")
-  .replace(/^import \{ blastMode, startBlastProbe \} from "\.\/blast_probe\.js";\r?\n/, "");
+  .replace(/^import \{ world, system, EntityDamageCause \} from "@minecraft\/server";\r?\n/, "");
 
 const NORMALS = {
   Up: [0, 1, 0], Down: [0, -1, 0], East: [1, 0, 0], West: [-1, 0, 0], North: [0, 0, -1], South: [0, 0, 1],
@@ -20,8 +18,7 @@ function blockHit(location, spec) {
     getBlockHit: () => ({ face, block: { location: cell } }) };
 }
 
-// `mode` is the blast method from blast_probe.js: scripted, native or grenade.
-export function harness({ mode = "scripted" } = {}) {
+export function harness() {
   let tick = 0;
   const queue = [];
   const handlers = {};
@@ -33,24 +30,19 @@ afterEvents: {
     worldLoad: signal("load"), projectileHitBlock: signal("block"), projectileHitEntity: signal("entity"),
   } };
   runInNewContext(source, { world, system: { run: schedule, runTimeout: schedule },
-    blastMode: () => mode, startBlastProbe() {}, EntityDamageCause: { entityExplosion: "entityExplosion" } });
+    EntityDamageCause: { entityExplosion: "entityExplosion" } });
   handlers.load();
   const record = (kind, location) => calls.push({ kind, tick, location: { ...location } });
   const dimension = {
     spawnParticle: (id, location) => record("particle", location),
-    createExplosion: (location, radius, options) => {
-      assert.equal(radius, 3);
-      assert.equal(options.breaksBlocks, false);
-      assert.equal(options.causesFire, false);
-      assert.equal(options.allowUnderwater, true);
-      record("explosion", location);
-      calls[calls.length - 1].options = options;
-      calls[calls.length - 1].sourceWasValid = options.source?.isValid;
-    },
     // Tests fill `nearby` (what the engine's query returns) and may set `blocked(center, direction, maxDistance)`.
     nearby: [],
     blocked: () => false,
-    getEntities(query) { this.query = query; return this.nearby; },
+    getEntities(query) {
+      record("query", query.location);
+      calls[calls.length - 1].query = query;
+      return this.nearby;
+    },
     getBlockFromRay(center, direction, options) {
       return this.blocked(center, direction, options.maxDistance) ? { block: {} } : undefined;
     },
@@ -69,7 +61,6 @@ afterEvents: {
     id, typeId, isValid: true,
     clearVelocity() { record("stop", {}); },
     teleport(location) { record("land", location); },
-    remove() { this.isValid = false; record("remove", {}); },
     triggerEvent(event) { record("detonate", {}); calls[calls.length - 1].event = event; },
   });
   return {
@@ -91,4 +82,3 @@ afterEvents: {
     },
   };
 }
-

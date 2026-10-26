@@ -14,20 +14,17 @@
     {
       "pattern": "grenade_bp/scripts/main.js",
       "featureId": "gm:grenade"
-    },
-    {
-      "pattern": "grenade_bp/scripts/blast_probe.js",
-      "featureId": "gm:grenade"
     }
   ],
   "ruleValues": [
     {
       "id": "gm:grenade/blast-radius",
-      "file": "grenade_bp/scripts/main.js",
-      "constant": "EXPLOSION_RADIUS",
+      "file": "grenade_bp/entities/grenade_projectile.json",
       "label": "Explosion radius",
       "unit": "blocks",
-      "featureId": "gm:grenade"
+      "featureId": "gm:grenade",
+      "pointer": "/minecraft:entity/component_groups/gm:exploding/minecraft:explode/power",
+      "scale": 1
     },
     {
       "id": "gm:grenade/impact-delay",

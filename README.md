@@ -8,6 +8,7 @@ the thrower's attack for every add-on (XP, player-only drops, mob retaliation). 
 can fire it too.
 
 Packs: `grenade_bp/` + `grenade_rp/`. Deploy with `.\mods deploy grenade` from the workspace.
+Download the add-on from the repo's GitHub Releases page, https://github.com/Teliendan/mc_be_grenade/releases, or build it locally with `.\mods package grenade` from the workspace root.
 Design, limits and in-game checks: [docs/VANILLA_PARITY.md](docs/VANILLA_PARITY.md). Flight and
 blast decisions, including the approaches that failed: [docs/FLIGHT.md](docs/FLIGHT.md),
 [docs/BLAST.md](docs/BLAST.md).

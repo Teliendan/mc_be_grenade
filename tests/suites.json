@@ -1,0 +1,8 @@
+{
+  "version": 1,
+  "suites": {
+    "impact": ["impact_timing.mjs"],
+    "blast": ["blast_damage.mjs"]
+  },
+  "support_files": {}
+}

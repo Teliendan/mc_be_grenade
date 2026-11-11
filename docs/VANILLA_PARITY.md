@@ -26,3 +26,13 @@ Target Bedrock 1.26.52 / Script API 2.8.0. History: git (inspection of 2026-10-2
 5. Breaks no blocks, starts no fire, leaves items on the ground; works underwater.
 6. Survival: one grenade consumed per throw, 0.5 s cooldown; Creative consumes none.
 7. Recipe: four copper nuggets + gunpowder gives one grenade.
+
+## Bedrock 26.60 impact (2026-10-27, documented only)
+
+Source review against the 26.60 changelog and API 2.11.0 / 2.12.0-beta declarations; nothing tested in game.
+
+- Verdict: no change needed. The mod stays on entity/item format 1.21.120 and Script API 2.8.0; the 26.60 schema tightening does not apply at those formats and no API the script uses was removed.
+- Format bump stays blocked by the recorded decision (a newer format changes `isolated_physics` and `multiple_targets` defaults); vanilla's newer projectiles use `pushable_by_entity` + `pushable_by_block` instead of `pushable`, useful only if a bump is ever chosen.
+- `ExplosionOptions` still has no attacker field in 2.11.0, so the scripted `applyDamage` blast (`BLAST.md`) stays.
+- Deferred idea: a custom throw sound needs an RP sound plus an item format bump to 1.26.50 or later; a feature request, not a fix. Owner may check the throw subtitle (cosmetic, unverified).
+- Owner regression checks on 26.60: the checks listed above under owner regression checks, plus the flight arc (`FLIGHT.md`).

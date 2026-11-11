@@ -6,7 +6,7 @@
     "evidence": [
       {
         "path": "docs/VANILLA_PARITY.md",
-        "sha256": "18ac897a493b5741fca6f414fd2d44b89a449e32eff711f5738e9eec073ef9ff"
+        "sha256": "27d819c8ac9128462c533348ccdf5bcc1109136988ae6e32233a006b7ec783ff"
       },
       {
         "path": "grenade_bp/entities/grenade_projectile.json",

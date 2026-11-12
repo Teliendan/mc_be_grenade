@@ -1,43 +1,86 @@
-"""Generate the grenade sprite and matching pack badges. Run from any directory."""
+"""Generate the grenade sprite (F5 frag shape, current palette) and matching pack badges. Run from any directory."""
 from pathlib import Path
 from PIL import Image, ImageDraw
 
 ROOT = Path(__file__).resolve().parents[1]
-PALETTE = {
-    '.': (0, 0, 0, 0),
-    'o': '#26352c', 's': '#3e5031', 'g': '#5e7339',
-    'l': '#899b49', 'h': '#bbc46b', 'm': '#718342',
-    'd': '#303d47', 'i': '#657783', 'a': '#a6bbc0', 'w': '#e2ece4',
-}
-# Deliberate clusters: rounded cast body, recessed seams, folded steel lever,
-# and a hollow pull ring. One pixel of breathing room around the silhouette.
-ROWS = [
-    '................',
-    '.......awaa.....',
-    '.....iiad.da....',
-    '.....awiiia.....',
-    '.....sggddi.....',
-    '....olhlgsdi....',
-    '...olhlgsgdi....',
-    '...olggssgsi....',
-    '..olhlsmlgsi....',
-    '..olggsgggsi....',
-    '..osssossssi....',
-    '...olgsmgso.....',
-    '...omgsggso.....',
-    '....osssso......',
-    '.....oooo.......',
-    '................',
-]
+# Roles of the palette: ramp (groove, shade, mid, light), outline, rim light, steel (dark, mid, light, glint).
+RAMP = ['#26352c', '#3e5031', '#5e7339', '#899b49']
+OUTLINE = '#1a251f'
+RIM = '#bbc46b'
+STEEL = ['#303d47', '#657783', '#a6bbc0', '#e2ece4']
+# Lever: (x, y, steel index). Ring: 3x3 hollow, top-left corner below.
+LEVER = [(10, 3, 0), (11, 3, 2), (12, 4, 2), (12, 5, 1), (11, 4, 0),
+         (13, 4, 0), (13, 5, 0), (13, 6, 0), (12, 6, 0)]
+RING = (5, 0)
+
+
+def rgba(h):
+    return tuple(int(h[i:i + 2], 16) for i in (1, 3, 5)) + (255,)
+
+
+def body(img):
+    """Oval cast body: cells cut by one groove column and two groove rows, flat 3-tone
+    shading per cell (light from the top-left), lighter top/left cell edges, rim light."""
+    cx, cy, rx, ry = 7.5, 10.0, 5.5, 5.0
+    gx, gy = [7], [8, 11]
+    mask = {(x, y) for y in range(16) for x in range(16)
+            if ((x + .5 - cx) / rx) ** 2 + ((y + .5 - cy) / ry) ** 2 <= 1.0}
+    cells = {}
+    for x, y in mask:
+        key = (sum(x > l for l in gx), sum(y > l for l in gy))
+        cells.setdefault(key, []).append((x, y))
+    for pts in cells.values():
+        mx = sum(p[0] for p in pts) / len(pts)
+        my = sum(p[1] for p in pts) / len(pts)
+        lum = -0.6 * (mx + .5 - cx) / rx - 0.7 * (my + .5 - cy) / ry
+        base = 1 if lum < -0.15 else (2 if lum < 0.35 else 3)
+        x0, x1 = min(p[0] for p in pts), max(p[0] for p in pts)
+        y0, y1 = min(p[1] for p in pts), max(p[1] for p in pts)
+        for x, y in pts:
+            t = base
+            if len(pts) >= 6:
+                if (x == x0 or y == y0) and base < 3:
+                    t = base + 1
+                elif (x == x1 or y == y1) and base > 1:
+                    t = base - 1
+            img.putpixel((x, y), rgba(RAMP[t]))
+    for x, y in mask:
+        if x in gx or y in gy:
+            img.putpixel((x, y), rgba(RAMP[0]))
+    edge = {(x, y) for x, y in mask
+            if any((x + dx, y + dy) not in mask for dx, dy in ((1, 0), (-1, 0), (0, 1), (0, -1)))}
+    for p in edge:
+        img.putpixel(p, rgba(OUTLINE))
+    for x, y in sorted(mask - edge):
+        if (x - 1, y) in edge or (x, y - 1) in edge:
+            img.putpixel((x, y), rgba(RIM))
+
+
+def head(img):
+    """Steel fuse head, a 5x3 block with a glint."""
+    for y in range(3, 6):
+        for x in range(5, 10):
+            edge = x in (5, 9) or y in (3, 5)
+            img.putpixel((x, y), rgba(OUTLINE if edge else (STEEL[2] if x == 6 else STEEL[1])))
+    img.putpixel((6, 4), rgba(STEEL[3]))
+
+
+def ring(img):
+    x, y = RING
+    for dx, dy in [(0, 0), (1, 0), (2, 0), (0, 1), (2, 1), (0, 2), (1, 2), (2, 2)]:
+        img.putpixel((x + dx, y + dy), rgba(STEEL[2]))
+    for dx, dy in [(2, 1), (1, 2), (2, 2)]:
+        img.putpixel((x + dx, y + dy), rgba(STEEL[1]))
 
 
 def sprite():
-    assert len(ROWS) == 16 and all(len(row) == 16 for row in ROWS)
-    img = Image.new('RGBA', (16, 16))
-    for y, row in enumerate(ROWS):
-        for x, symbol in enumerate(row):
-            img.putpixel((x, y), Image.new('RGBA', (1, 1), PALETTE[symbol]).getpixel((0, 0)))
-    assert {p[3] for p in img.getdata()} == {0, 255}
+    img = Image.new('RGBA', (16, 16), (0, 0, 0, 0))
+    body(img)
+    head(img)
+    for x, y, k in LEVER:
+        img.putpixel((x, y), rgba(STEEL[k]))
+    ring(img)
+    assert set(img.getchannel('A').tobytes()) == {0, 255}
     return img
 
 

@@ -5,4 +5,4 @@ uses the same texture, and both packs share a 256x256 badge of it over an amber 
 
 - Regenerate texture and pack icons: `python -B tools/make_graphics.py`
 - Owner's choice: f5_current, chosen 2026-11-12 from three rounds of variants. Commit `9445ce4`.
-- In-game acceptance is still pending.
+- Accepted by the owner in game, 2026-11-17.

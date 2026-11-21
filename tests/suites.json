@@ -2,7 +2,8 @@
   "version": 1,
   "suites": {
     "impact": ["impact_timing.mjs"],
-    "blast": ["blast_damage.mjs"]
+    "blast": ["blast_damage.mjs"],
+    "budget": ["blast_budget.mjs"]
   },
   "support_files": {}
 }

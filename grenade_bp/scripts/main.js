@@ -56,22 +56,69 @@ function exposure(dimension, center, entity) {
 // an exploding grenade is reported as its own attacker, and a player-sourced script
 // explosion damages nothing (verified in game, docs/BLAST.md). Vanilla falloff:
 // impact = (1 - distance / range) * exposure; damage = (impact^2 + impact) / 2 * 7 * range + 1.
-function damageAround(dimension, center, attacker) {
-  const entities = dimension.getEntities({ location: center, maxDistance: DAMAGE_RANGE, excludeTypes: UNHARMED_TYPES });
-  for (const entity of entities) {
+// Owner decision 2026-11-21 (performance audit G1): a detonation in a packed farm must not
+// raycast hundreds of mobs in one callback. Entities are handled closest first, at most
+// BLAST_BATCH (about 48 raycasts) per step; the first step runs in the detonation callback
+// itself, so an ordinary fight is fully handled exactly as before and only the far mobs of a
+// crowd are hit one or two ticks later by a job.
+const BLAST_BATCH = 16;
+
+function damageEntity(dimension, center, attacker, entity) {
+  try {
+    if (!entity.isValid) return; // died or unloaded since the query
+    const feet = entity.location;
+    const distance = Math.hypot(feet.x - center.x, feet.y - center.y, feet.z - center.z);
+    const impact = (1 - distance / DAMAGE_RANGE) * exposure(dimension, center, entity);
+    if (impact <= 0) return;
+    const options = { cause: EntityDamageCause.entityExplosion };
+    // The thrower's own blast is not an attack on themselves.
+    if (attacker && attacker.id !== entity.id) options.damagingEntity = attacker;
+    entity.applyDamage(((impact * impact + impact) / 2) * 7 * DAMAGE_RANGE + 1, options);
+  } catch {
+    /* entity gone */
+  }
+}
+
+// Apply the blast damage ourselves so every pack sees the thrower as the attacker:
+// an exploding grenade is reported as its own attacker, and a player-sourced script
+// explosion damages nothing (verified in game, docs/BLAST.md). Vanilla falloff:
+// impact = (1 - distance / range) * exposure; damage = (impact^2 + impact) / 2 * 7 * range + 1.
+// `attackerNow` is asked again before every step (the thrower may leave between steps).
+// `done()` runs after the last entity was handled.
+function damageAround(dimension, center, attackerNow, done) {
+  const found = dimension.getEntities({ location: center, maxDistance: DAMAGE_RANGE, excludeTypes: UNHARMED_TYPES });
+  const queue = [];
+  for (const entity of found) {
     try {
-      const feet = entity.location;
-      const distance = Math.hypot(feet.x - center.x, feet.y - center.y, feet.z - center.z);
-      const impact = (1 - distance / DAMAGE_RANGE) * exposure(dimension, center, entity);
-      if (impact <= 0) continue;
-      const options = { cause: EntityDamageCause.entityExplosion };
-      // The thrower's own blast is not an attack on themselves.
-      if (attacker && attacker.id !== entity.id) options.damagingEntity = attacker;
-      entity.applyDamage(((impact * impact + impact) / 2) * 7 * DAMAGE_RANGE + 1, options);
+      const at = entity.location;
+      queue.push({ entity, distance: Math.hypot(at.x - center.x, at.y - center.y, at.z - center.z) });
     } catch {
       /* entity gone */
     }
   }
+  queue.sort((a, b) => a.distance - b.distance);
+  let next = 0;
+  const step = () => {
+    const attacker = attackerNow();
+    for (const end = Math.min(next + BLAST_BATCH, queue.length); next < end; next++) {
+      damageEntity(dimension, center, attacker, queue[next].entity);
+    }
+  };
+  step();
+  if (next >= queue.length) {
+    done();
+    return;
+  }
+  system.runJob((function* () {
+    try {
+      while (next < queue.length) {
+        yield;
+        step();
+      }
+    } finally {
+      done();
+    }
+  })());
 }
 
 function onHit(event) {
@@ -127,19 +174,22 @@ function onHit(event) {
         /* chunk unloaded */
       }
 
-      const attacker = source?.isValid ? source : projectile.isValid ? projectile : undefined;
+      const attackerNow = () => (source?.isValid ? source : projectile.isValid ? projectile : undefined);
+      // The grenade then explodes itself, harmlessly; the engine removes it. It waits for
+      // the last damage step so the grenade stays valid as the fallback attacker.
+      const finish = () => {
+        try {
+          if (projectile.isValid) projectile.triggerEvent(DETONATE_EVENT);
+        } catch {
+          /* chunk unloaded */
+        }
+        pendingImpacts.delete(projectileId);
+      };
       try {
-        damageAround(dimension, location, attacker);
+        damageAround(dimension, location, attackerNow, finish);
       } catch {
-        /* chunk unloaded */
+        finish(); // chunk unloaded
       }
-      // The grenade then explodes itself, harmlessly; the engine removes it.
-      try {
-        if (projectile.isValid) projectile.triggerEvent(DETONATE_EVENT);
-      } catch {
-        /* chunk unloaded */
-      }
-      pendingImpacts.delete(projectileId);
     }, IMPACT_SETTLE_TICKS);
   });
 }

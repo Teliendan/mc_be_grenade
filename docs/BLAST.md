@@ -27,7 +27,14 @@ consumer pack is not enough.
      block breaking or fire, underwater-proof, fuse 0): sound, particles and knockback. The
      engine then removes the grenade.
 
-Tests: `tests/impact_timing.mjs`, `tests/blast_damage.mjs`.
+4. Budget (owner decision 2026-11-21, performance audit G1): the entities in range are queried once,
+   sorted closest first and handled at most 16 per step (about 48 raycasts). The first step runs in the
+   three-tick callback itself, so a normal fight behaves as before; a packed farm's far mobs are hit one or
+   two ticks later by a `system.runJob`, and `gm:detonate` fires after the last step (the grenade stays valid
+   as the fallback attacker). Entities that died meanwhile are skipped; the attacker is re-resolved per step.
+   Worst single call on 200 mobs: 600 raycasts / 200 damage calls before, 48 / 16 after (counting mock).
+
+Tests: `tests/impact_timing.mjs`, `tests/blast_damage.mjs`, `tests/blast_budget.mjs`.
 
 ## What worked and what did not (do not repeat)
 

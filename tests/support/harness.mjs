@@ -29,7 +29,9 @@ export function harness() {
 afterEvents: {
     worldLoad: signal("load"), projectileHitBlock: signal("block"), projectileHitEntity: signal("entity"),
   } };
-  runInNewContext(source, { world, system: { run: schedule, runTimeout: schedule },
+  runInNewContext(source, { world, system: { run: schedule, runTimeout: schedule,
+    // A job advances one step per tick (the engine may run more; one step is the unit the budget counts).
+    runJob: (generator) => { const tickJob = () => { if (!generator.next().done) schedule(tickJob); }; schedule(tickJob); } },
     EntityDamageCause: { entityExplosion: "entityExplosion" } });
   handlers.load();
   const record = (kind, location) => calls.push({ kind, tick, location: { ...location } });
@@ -44,6 +46,7 @@ afterEvents: {
       return this.nearby;
     },
     getBlockFromRay(center, direction, options) {
+      record("ray", center);
       return this.blocked(center, direction, options.maxDistance) ? { block: {} } : undefined;
     },
   };

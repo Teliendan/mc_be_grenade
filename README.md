@@ -17,3 +17,7 @@ Tests: `node tests/run.mjs` (also run by `.\mods verify grenade`).
 ## Localization
 
 Nine locales use a mod-scoped contextual catalog. See [the localization notes](docs/LOCALIZATION.md) before adding or changing player-facing text.
+
+## What's new
+
+See [CHANGELOG.md](CHANGELOG.md) and the [Releases page](https://github.com/Teliendan/mc_be_grenade/releases).

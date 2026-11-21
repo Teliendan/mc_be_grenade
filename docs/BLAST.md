@@ -33,6 +33,7 @@ consumer pack is not enough.
    two ticks later by a `system.runJob`, and `gm:detonate` fires after the last step (the grenade stays valid
    as the fallback attacker). Entities that died meanwhile are skipped; the attacker is re-resolved per step.
    Worst single call on 200 mobs: 600 raycasts / 200 damage calls before, 48 / 16 after (counting mock).
+   Owner accepted it without a game check on 2026-11-21 (Bedrock 1.26.63).
 
 Tests: `tests/impact_timing.mjs`, `tests/blast_damage.mjs`, `tests/blast_budget.mjs`.
 

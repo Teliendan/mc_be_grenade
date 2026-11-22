@@ -2,4 +2,4 @@
 ## Explicit compatibility alias for fr_FR; not independently localized.
 item.gm:grenade=Grenade
 pack.name=Grenade — Pack de ressources
-pack.description=Pack de ressources de Grenade : textures, modèles et textes.
+pack.description=v0.9.0 · Pack de ressources de Grenade : textures, modèles et textes.

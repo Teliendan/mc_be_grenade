@@ -6,7 +6,7 @@
     "evidence": [
       {
         "path": "docs/VANILLA_PARITY.md",
-        "sha256": "27d819c8ac9128462c533348ccdf5bcc1109136988ae6e32233a006b7ec783ff"
+        "sha256": "477e8248a1b6370263beaddc621a144473a570b41ff22c4ecc4ea1ae08004876"
       },
       {
         "path": "grenade_bp/entities/grenade_projectile.json",
@@ -37,7 +37,7 @@
     "evidence": [
       {
         "path": "docs/VANILLA_PARITY.md",
-        "sha256": "27d819c8ac9128462c533348ccdf5bcc1109136988ae6e32233a006b7ec783ff"
+        "sha256": "477e8248a1b6370263beaddc621a144473a570b41ff22c4ecc4ea1ae08004876"
       },
       {
         "path": "grenade_bp/entities/grenade_projectile.json",
@@ -60,7 +60,7 @@
     "evidence": [
       {
         "path": "docs/VANILLA_PARITY.md",
-        "sha256": "27d819c8ac9128462c533348ccdf5bcc1109136988ae6e32233a006b7ec783ff"
+        "sha256": "477e8248a1b6370263beaddc621a144473a570b41ff22c4ecc4ea1ae08004876"
       },
       {
         "path": "grenade_bp/entities/grenade_projectile.json",

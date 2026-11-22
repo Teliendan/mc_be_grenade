@@ -60,4 +60,4 @@ All in game on 1.26.52, 2026-10-25/26, read with a temporary probe that logged t
 ## Limits
 
 - Exposure is approximated by three rays, not vanilla's grid, so partial cover is coarser.
-- Nothing persists an impact: a grenade unloaded in the 3-tick window may not explode.
+- Nothing persists an impact: a grenade unloaded in the 3-tick window may not explode. Closed as unreachable (owner, 2026-11-22): the thrower keeps the area loaded and the blast follows the impact by about 4 ticks; not a wiki limitation.

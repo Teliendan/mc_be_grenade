@@ -14,7 +14,7 @@ Target Bedrock 1.26.52 / Script API 2.8.0. History: git (inspection of 2026-10-2
 ## Known limits
 - Entity format stays 1.21.120: 26.50 changes defaults (`isolated_physics` true from format
   1.26.30, `multiple_targets` false from 1.26.50), so a format bump changes flight/contact.
-- Nothing persists an impact: a grenade unloaded in the 3-tick window may not explode.
+- Nothing persists an impact: a grenade unloaded in the 3-tick window may not explode. Closed as unreachable (owner, 2026-11-22): the thrower keeps the area loaded and the blast follows the impact by about 4 ticks; not a wiki limitation.
 - Blast exposure uses three rays, not vanilla's grid: partial cover is coarser.
 - The hidden projectile has no display name (`VERIFIER_WARNINGS.md`).
 

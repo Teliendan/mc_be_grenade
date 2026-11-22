@@ -2,7 +2,7 @@
   {
     "featureId": "gm:grenade",
     "id": "gm:grenade/throw",
-    "text": "Use to throw. The grenade flies in a slow, visible arc trailing sparks and smoke and explodes about {{gm:grenade/impact-delay}} seconds after it lands, with a green puff. A Survival throw uses up one grenade.",
+    "text": "Throw it like a snowball (right-click on PC). It flies in a slow, visible arc trailing sparks and smoke, so you can see where it will land, and explodes a moment after landing, with a green puff. Each throw in Survival uses up one grenade.",
     "evidence": [
       {
         "path": "docs/VANILLA_PARITY.md",
@@ -79,7 +79,7 @@
   {
     "featureId": "gm:grenade",
     "id": "gm:grenade/dispenser",
-    "text": "Dispensers can fire grenades. Dispenser kills do not award player-kill XP or player-only drops.",
+    "text": "A dispenser fires grenades too. Its kills are not yours: they give no XP and none of the drops that only a player kill gives.",
     "evidence": [
       {
         "path": "docs/VANILLA_PARITY.md",

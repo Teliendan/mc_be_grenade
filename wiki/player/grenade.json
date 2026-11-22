@@ -1,0 +1,26 @@
+[
+  {
+    "featureId": "gm:grenade",
+    "details": {
+      "summary": "A throwable explosive: it hurts every creature near the blast, you and your friends included, but never breaks blocks."
+    },
+    "evidence": [
+      {
+        "path": "docs/VANILLA_PARITY.md",
+        "sha256": "477e8248a1b6370263beaddc621a144473a570b41ff22c4ecc4ea1ae08004876"
+      },
+      {
+        "path": "grenade_bp/entities/grenade_projectile.json",
+        "sha256": "f44a3462107be0c0b0b8668bcd05ee74ba27fd17964b6e4bff0a948073db8029"
+      },
+      {
+        "path": "grenade_bp/items/grenade.json",
+        "sha256": "8ee390e415ccd7d35d997e09fcf453cb59d2f21b83255092031f5989e32fa52e"
+      },
+      {
+        "path": "grenade_bp/scripts/main.js",
+        "sha256": "5d633e60a86a55269279c95a62b76334c9ac8ec2ab6c28cde6f3df4094f553b0"
+      }
+    ]
+  }
+]

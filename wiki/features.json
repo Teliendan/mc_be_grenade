@@ -14,7 +14,7 @@
         {
           "id": "gm:grenade/obtain",
           "kind": "crafting",
-          "text": "Craft a grenade using copper nuggets and gunpowder.",
+          "text": "Craft it at a crafting table: four Copper Nuggets in a plus shape around one Gunpowder make one Grenade. One Copper Ingot crafts into nine Copper Nuggets.",
           "related": []
         }
       ],

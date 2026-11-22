@@ -9,7 +9,8 @@ A throwable grenade that damages creatures but leaves your blocks alone. It flie
 ## Features
 
 - **Throw:** right-click to throw. The grenade explodes a moment after it lands, with a green puff, and works underwater too.
-- **Blast:** hurts creatures within about 6 blocks, less with distance and behind cover. It hurts you too if you stand too close. It does not break blocks, start fires or destroy items on the ground.
+- **Blast:** hurts creatures within about 6 blocks, less with distance and behind cover. It does not break blocks, start fires or destroy items on the ground.
+- **Friendly fire:** the blast hurts you, other players, pets and villagers as well, up to more than a full health bar at the centre. Throw it well away from yourself and your friends.
 - **Your kills:** a grenade kill counts as yours, so you get the XP and the drops that only a player kill gives.
 - **Dispensers:** dispensers fire grenades too. Their kills give no player-kill rewards.
 - **Crafting:** in a crafting table, place four copper nuggets in a plus shape with one gunpowder in the middle. Grenades stack to 16, with a short cooldown between throws.

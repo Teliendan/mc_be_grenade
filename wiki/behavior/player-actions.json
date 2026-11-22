@@ -2,7 +2,7 @@
   {
     "featureId": "gm:grenade",
     "id": "gm:grenade/throw",
-    "text": "Use to throw. The grenade flies in a slow, visible arc trailing sparks and smoke, and explodes about {{gm:grenade/impact-delay}} seconds after impact, with a {{gm:grenade/blast-radius}}-block blast.",
+    "text": "Use to throw. The grenade flies in a slow, visible arc trailing sparks and smoke and explodes about {{gm:grenade/impact-delay}} seconds after it lands, with a green puff. A Survival throw uses up one grenade.",
     "evidence": [
       {
         "path": "docs/VANILLA_PARITY.md",
@@ -33,7 +33,30 @@
   {
     "featureId": "gm:grenade",
     "id": "gm:grenade/blast",
-    "text": "The blast hurts creatures up to {{gm:grenade/damage-range}} blocks away, less with distance and behind cover, and counts as the thrower's attack. It works underwater, does not break blocks, start fires or destroy items lying on the ground. A Survival throw consumes one grenade.",
+    "text": "Friendly fire: the blast hurts everything alive within {{gm:grenade/damage-range}} blocks, not only hostile mobs. That includes you, other players, pets and villagers. Damage is highest at the centre, up to 43 (more than a full health bar), and less with distance and behind cover, so throw it well away from yourself and your friends. It works underwater and does not break blocks, start fires or destroy items lying on the ground.",
+    "evidence": [
+      {
+        "path": "docs/VANILLA_PARITY.md",
+        "sha256": "477e8248a1b6370263beaddc621a144473a570b41ff22c4ecc4ea1ae08004876"
+      },
+      {
+        "path": "grenade_bp/entities/grenade_projectile.json",
+        "sha256": "f44a3462107be0c0b0b8668bcd05ee74ba27fd17964b6e4bff0a948073db8029"
+      },
+      {
+        "path": "grenade_bp/items/grenade.json",
+        "sha256": "8ee390e415ccd7d35d997e09fcf453cb59d2f21b83255092031f5989e32fa52e"
+      },
+      {
+        "path": "grenade_bp/scripts/main.js",
+        "sha256": "5d633e60a86a55269279c95a62b76334c9ac8ec2ab6c28cde6f3df4094f553b0"
+      }
+    ]
+  },
+  {
+    "featureId": "gm:grenade",
+    "id": "gm:grenade/kills",
+    "text": "A kill by your grenade counts as yours, so you get the XP and the drops that only a player kill gives.",
     "evidence": [
       {
         "path": "docs/VANILLA_PARITY.md",

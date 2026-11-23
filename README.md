@@ -14,6 +14,7 @@ A throwable grenade that damages creatures but leaves your blocks alone. It flie
 - **Your kills:** a grenade kill counts as yours, so you get the XP and the drops that only a player kill gives.
 - **Dispensers:** dispensers fire grenades too. Their kills give no player-kill rewards.
 - **Crafting:** in a crafting table, place four copper nuggets in a plus shape with one gunpowder in the middle. Grenades stack to 16, with a short cooldown between throws.
+- **Vibrant Visuals:** with Vibrant Visuals on, the grenade has a painted-metal look, with a shiny steel pin and lever.
 - **Languages:** English, Czech, German, French, Polish, Spanish (Spain and Mexico) and Portuguese (Portugal and Brazil). The translations are AI drafts; corrections are welcome.
 
 ## Install

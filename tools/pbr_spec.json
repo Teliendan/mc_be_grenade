@@ -1,0 +1,12 @@
+{
+  "schema": 1,
+  "rp": "grenade_rp",
+  "textures": {
+    "grenade": {
+      "regions": [
+        { "select": {"hue": [180, 220]}, "like": "items/bucket_empty" },
+        { "select": "rest", "like": "items/turtle_helmet" }
+      ]
+    }
+  }
+}
